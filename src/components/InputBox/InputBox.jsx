@@ -49,7 +49,7 @@ function InputBox() {
       </div>
 
       <div className="flex justify-end">
-        <Button type="submit" loading={loading}>
+        <Button type="submit" loading={loading} disabled={true}>
           Post
         </Button>
       </div>

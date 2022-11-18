@@ -1,0 +1,43 @@
+import React from "react";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { Link } from "react-router-dom";
+import useHTTP from "../../hooks/useHTTP";
+
+function PostOwnerActions({ postId }) {
+  console.log(postId);
+  const {
+    response: deleteResponse,
+    error: deleteError,
+    loading: deleteLoading,
+    fetchData: deletePost,
+  } = useHTTP({
+    path: `/posts/${postId}`,
+    method: "DELETE",
+  });
+
+  async function deletePostHandler() {
+    await deletePost();
+  }
+
+  return (
+    <div className="dropdown dropdown-left p-4 flex items-center ">
+      <span tabIndex={0} className="cursor-pointer">
+        <BsThreeDotsVertical size="1.2rem" />
+      </span>
+      <ul
+        tabIndex={0}
+        className="dropdown-content menu max-sm:p-1 sm:p-2 shadow bg-base-100 rounded-box w-52"
+      >
+        <li>
+          <Link to={`/post/${postId}/edit`}>Edit</Link>
+        </li>
+
+        <li onClick={deletePostHandler}>
+          <a className="text-red-600">Delete</a>
+        </li>
+      </ul>
+    </div>
+  );
+}
+
+export default PostOwnerActions;

@@ -1,16 +1,26 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getAuth } from "../../store/slices/authSlice";
 import { getRelativeTime } from "../../utils/helpers";
 import ProfileWithTimestamp from "../ProfileWithTimestamp/ProfileWithTimestamp";
-import PostActions from "./PostActions";
+import PostActions from "./PostInteractions";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import PostOwnerActions from "./PostOwnerActions";
 
-function Post(data) {
-  const { user, text, id, posted_at, image } = data.data;
+function Post({ data }) {
+  const { user } = useSelector(getAuth);
+  const { user: postedUser, text, id, posted_at, image } = data;
+
+  const postOwner = user?.id === postedUser.id;
 
   return (
-    <div className="card shadow-x w-full bg-base-300 mb-4">
+    <div className="card shadow-x w-full bg-base-300 mb-12">
       {/* user & post details */}
-      <ProfileWithTimestamp posted_at={posted_at} user={user} />
+      <div className="flex justify-between ">
+        <ProfileWithTimestamp posted_at={posted_at} user={postedUser} />
+        {postOwner && <PostOwnerActions postId={id} />}
+      </div>
 
       <div className="card-body">
         <p>{text}</p>
@@ -18,6 +28,8 @@ function Post(data) {
       <figure>{image && <img src={image} alt="post-image" />}</figure>
 
       {/* post actions */}
+      {/* horizontal line */}
+      <hr className="border-1 border-gray-300" />
       <PostActions postId={id} />
     </div>
   );

@@ -9,21 +9,12 @@
     },
     "posted_at": "2022-01-01T12:00:00Z"
   },
+
   {
     "id": 1,
     "text": "Hello World",
     "user": {
       "id": 1,
-      "name": "John Doe",
-      "photo_url": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
-    },
-    "posted_at": "2020-05-01T12:00:00Z"
-  },
-  {
-    "id": 2,
-    "text": "Hello World",
-    "user": {
-      "id": 2,
       "name": "Jane Doe",
       "photo_url": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
     },

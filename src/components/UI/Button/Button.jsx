@@ -7,6 +7,7 @@ function Button({
   className = "",
   loading = false,
   style = "primary",
+  ...props
 }) {
   return (
     <button

@@ -96,22 +96,27 @@ function PostComments({ postId }) {
       </div>
 
       {/* comment form */}
-      <form className="flex items-center" onSubmit={addCommentHandler}>
-        <img
-          className="w-10 h-10 rounded-full"
-          src={user.picture}
-          alt="avatar"
-        />
-        <input
-          type="text"
-          className={`input input-bordered ml-3 flex-grow ${
-            addingCommentError ? "input-error" : ""
-          }`}
-          placeholder="Write a comment..."
-          ref={commentInputRef}
-        />
+      <form
+        className="flex sm:items-center sm:flex-row flex-col"
+        onSubmit={addCommentHandler}
+      >
+        <div className="flex flex-grow items-center max-sm:mb-3">
+          <img
+            className="w-10 h-10 rounded-full"
+            src={user.picture}
+            alt="avatar"
+          />
+          <input
+            type="text"
+            className={`input input-bordered ml-3 mr-1 flex-grow ${
+              addingCommentError ? "input-error" : ""
+            }`}
+            placeholder="Write a comment..."
+            ref={commentInputRef}
+          />
+        </div>
 
-        <Button type="submit" loading={addingCommentLoading}>
+        <Button type="submit" style="ghost" loading={addingCommentLoading}>
           Post
         </Button>
       </form>

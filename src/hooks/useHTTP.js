@@ -23,7 +23,9 @@ function useHTTP({ path, method }) {
 
             setResponse(req.data);
         } catch (error) {
-            setError(error)
+            setResponse(error.response.data);
+            setError(error.response.data.message)
+
         } finally {
             setLoading(false)
         }
