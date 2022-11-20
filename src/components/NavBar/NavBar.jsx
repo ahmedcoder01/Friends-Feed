@@ -2,11 +2,13 @@ import React from "react";
 import SearchButton from "../Search/SearchButton";
 import NotificationsButton from "../Notifications/NotificationsButton";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../store/thunks";
+import { getAuth } from "../../store/slices/authSlice";
 
 function NavBar() {
   const dispatch = useDispatch();
+  const { user } = useSelector(getAuth);
 
   function handleLogout() {
     dispatch(logout());
@@ -40,7 +42,7 @@ function NavBar() {
               <Link to="/home">Home</Link>
             </li>
             <li>
-              <Link to="/profile">Profile</Link>
+              <Link to={`/profile/${user?.id}`}>Profile</Link>
             </li>
             <li>
               <Link to="/friends">Friends</Link>
