@@ -53,7 +53,7 @@ function ProfileHeader({ profileUserId, profileUser }) {
         )}
       </div>
       <Container>
-        <div className=" flex justify-between">
+        <div className=" flex max-sm:justify-center sm:justify-between">
           {/* user profile image and name */}
           <div className="flex items-center  max-sm:flex-col">
             <div className="rounded-full relative bottom-20 h-24">

@@ -3,34 +3,27 @@ import { useSelector } from "react-redux";
 import { getAuth } from "../../store/slices/authSlice";
 import Button from "../../components/UI/Button/Button";
 import usePublishPost from "../../hooks/usePublishPost";
+import useToast from "../../hooks/useToast";
+import { useQuery } from "@tanstack/react-query";
+import { createPost } from "../../client";
 
-function InputBox() {
+function InputBox({
+  onSubmit,
+  onChange,
+  isLoading,
+  isError,
+  isValidationError,
+}) {
+  //TODO: make this component reusable
   const { user } = useSelector(getAuth);
-  const { post, loading, error, setError } = usePublishPost();
 
   const textRef = useRef();
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    const isEmpty = textRef.current.value.trim().length === 0;
-    if (isEmpty) {
-      setError("Field is required");
-      return;
-    }
-
-    const data = {
-      text: textRef.current.value,
-    };
-    await post(data);
-    // check if post was successful after await
-    if (!error) {
-      e.target.reset();
-    }
-  }
-
   return (
     <form
-      onSubmit={handleSubmit}
+      onSubmit={(e) => {
+        onSubmit(e, textRef.current.value);
+      }}
       aria-label="Create a post"
       className="mt-10 bg-base-300 rounded-xl p-5 flex flex-col gap-4"
     >
@@ -42,18 +35,20 @@ function InputBox() {
         />
 
         <textarea
-          className={`textarea w-full ${error ? "border-error" : ""}`}
+          onChange={onChange}
+          className={`textarea w-full ${
+            isValidationError || isError ? "border-error" : ""
+          }`}
           placeholder="Interact with your community"
           ref={textRef}
         ></textarea>
       </div>
 
       <div className="flex justify-end">
-        <Button type="submit" loading={loading} disabled={true}>
+        <Button type="submit" loading={isLoading} disabled={true}>
           Post
         </Button>
       </div>
-      {error && <p className="text-error">{error}</p>}
     </form>
   );
 }

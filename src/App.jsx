@@ -10,6 +10,9 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import { getAuth } from "./store/slices/authSlice";
 import NotFound from "./pages/NotFound/NotFound";
 import Search from "./pages/Search/Search";
+import { createPortal } from "react-dom";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,49 +24,53 @@ function App() {
   }, [dispatch]);
 
   return (
-    <Routes>
-      {/* Auth */}
-      <Route
-        path="/login"
-        element={!hasValidToken ? <Login /> : navigateToHome}
-      />
-      <Route
-        path="/signup"
-        element={!hasValidToken ? <Signup /> : navigateToHome}
-      />
+    <>
+      <Routes>
+        {/* Auth */}
+        <Route
+          path="/login"
+          element={!hasValidToken ? <Login /> : navigateToHome}
+        />
+        <Route
+          path="/signup"
+          element={!hasValidToken ? <Signup /> : navigateToHome}
+        />
 
-      {/* App */}
-      <Route
-        path="/home"
-        element={
-          <ProtectedRoute>
-            <Home />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/profile/:userId"
-        element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        }
-      />
+        {/* App */}
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile/:userId"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
 
-      <Route
-        path="/search"
-        element={
-          <ProtectedRoute>
-            <Search />
-          </ProtectedRoute>
-        }
-      />
+        <Route
+          path="/search"
+          element={
+            <ProtectedRoute>
+              <Search />
+            </ProtectedRoute>
+          }
+        />
 
-      <Route path="/" element={navigateToHome} />
+        <Route path="/" element={navigateToHome} />
 
-      {/* No match */}
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+        {/* No match */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+
+      {createPortal(<ToastContainer />, document.getElementById("toast"))}
+    </>
   );
 }
 

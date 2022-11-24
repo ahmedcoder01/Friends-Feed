@@ -1,6 +1,8 @@
+import { useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import useHTTP from "../../hooks/useHTTP";
+import useToast from "../../hooks/useToast";
 import { getAuth } from "../../store/slices/authSlice";
 import PostComments from "./PostComments";
 
@@ -9,23 +11,25 @@ function PostActions({ postId }) {
   const [isLiked, setIsLiked] = useState(false);
 
   const { user } = useSelector(getAuth);
+  const notify = useToast();
 
-  const {
-    response: likeResponse,
-    error: likeError,
-    loading: likeLoading,
-    fetchData: likePost,
-  } = useHTTP({
-    path: `/posts/${postId}/likes`,
-    method: isLiked ? "DELETE" : "POST",
+  const likeMutation = useMutation({
+    mutationFn: () => {
+      return likePost(postId);
+    },
+
+    onSuccess: () => {
+      setIsLiked((prev) => !prev);
+    },
+    onError: () => {
+      notify("Something went wrong", "error");
+    },
   });
 
   async function addLikeHandler() {
     console.log("like");
-    await likePost();
-    if (likeError) return;
-
-    setIsLiked((prevState) => !prevState);
+    // await likePost();
+    likeMutation.mutate();
   }
 
   return (

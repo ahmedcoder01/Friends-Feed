@@ -26,6 +26,9 @@ module.exports = exports = {
             }
         }],
 
+        // capture files that are not imported
+        "no-unused-vars": [ERROR, { "vars": "all", "args": "none" }],
+
         // Best Practices
 
         // Allowed a getter without setter, but all setters require getters

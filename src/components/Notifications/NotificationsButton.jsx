@@ -1,28 +1,20 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
+import { getNotifications } from "../../client";
 import useHTTP from "../../hooks/useHTTP";
 
 function NotificationsButton() {
   const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
 
-  const {
-    response: notifications,
-    error,
-    loading,
-    fetchData: fetchNotifications,
-  } = useHTTP({
-    path: `/notifications`,
-    method: "GET",
+  const { data: notifications } = useQuery({
+    queryKey: ["notifications"],
+    queryFn: getNotifications,
   });
 
-  // fectch unread notifications
+  // unread notifications
   useEffect(() => {
-    async function fetchNotificationsCount() {
-      await fetchNotifications();
-      if (error) return;
-      setHasUnreadNotifications(Boolean(notifications?.count));
-    }
-    fetchNotificationsCount();
-  }, []);
+    setHasUnreadNotifications(Boolean(notifications?.count));
+  }, [notifications]);
 
   return (
     <button className="btn btn-ghost btn-circle">

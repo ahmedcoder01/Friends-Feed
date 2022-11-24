@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { getAuth } from "../../store/slices/authSlice";
 import { getRelativeTime } from "../../utils/helpers";
 import ProfileWithTimestamp from "../ProfileWithTimestamp/ProfileWithTimestamp";
-import PostActions from "./PostInteractions";
+import PostActions from "./PostActions";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import PostOwnerActions from "./PostOwnerActions";
 

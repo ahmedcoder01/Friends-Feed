@@ -6,27 +6,24 @@ import Container from "../../components/UI/Container/Container";
 import useHTTP from "../../hooks/useHTTP";
 import ProfileHeader from "../../components/Profile/ProfileHeader";
 import { useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
+import { getProfileById } from "../../client";
+import Loader from "../../components/UI/Loader/Loader";
+import useToast from "../../hooks/useToast";
 
 function Profile() {
   // get id from params
   const { userId: profileUserId } = useParams();
+  const notify = useToast();
 
-  const {
-    response: profileResponse,
-    error: profileError,
-    loading: profileLoading,
-    fetchData: getProfile,
-  } = useHTTP({
-    path: `/users/${profileUserId}`,
-    method: "GET",
+  const { data: profileResponse, isLoading: profileLoading } = useQuery({
+    queryKey: ["userProfile", profileUserId],
+    queryFn: ({ queryKey }) => getProfileById(queryKey[1]),
   });
 
-  useEffect(() => {
-    async function fetch() {
-      await getProfile();
-    }
-    fetch();
-  }, []);
+  if (profileLoading) {
+    return <Loader />;
+  }
 
   return (
     <div className="min-h-screen">
