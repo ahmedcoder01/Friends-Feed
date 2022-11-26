@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {};
+interface DefaultRootState {}
+
+const initialState: DefaultRootState = {};
 
 const uiSlice = createSlice({
   name: "ui",
   initialState,
-  reducers: {}
+  reducers: {},
 });
 
 const uiActions = uiSlice.actions;
@@ -14,5 +16,3 @@ export default uiActions;
 export const uiReducer = uiSlice.reducer;
 
 //* THUNKS
-
-

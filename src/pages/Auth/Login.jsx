@@ -45,7 +45,7 @@ const Login = () => {
   }, [dispatch]);
 
   function submitHandler({ email, password }) {
-    dispatch(login(email, password));
+    dispatch(login({ email, password }));
   }
 
   return (

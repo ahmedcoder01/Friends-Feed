@@ -1,8 +1,21 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { AppThunk } from "./../thunks";
+import { LoginReq, SignupReq } from "./../../types/src/api";
+import { RootState } from "./../store";
+import { User } from "./../../types";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { extractError } from "../../utils/error";
 import { authInstance, usersInstance } from "../../axios/axiosInstances";
+import { Dispatch, ReducerState } from "react";
 
-const initialState = {
+type DefaultRootState = {
+  hasValidToken: boolean;
+  user: User | null;
+  error: object | null;
+  authLoading: boolean;
+  sendingRequest: boolean;
+};
+
+const initialState: DefaultRootState = {
   hasValidToken: false,
   user: null,
   error: null,
@@ -14,7 +27,7 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setUser(state, actions) {
+    setUser(state, actions: PayloadAction<User>) {
       state.user = actions.payload;
       if (actions.payload) {
         state.hasValidToken = true;
@@ -22,20 +35,25 @@ const authSlice = createSlice({
         state.hasValidToken = false;
       }
     },
-    setHasValidToken(state, actions) {
+
+    setHasValidToken(state, actions: PayloadAction<boolean>) {
       state.hasValidToken = actions.payload;
     },
+
     logout(state) {
       state.user = null;
       state.hasValidToken = false;
     },
-    setError(state, actions) {
+
+    setError(state, actions: PayloadAction<object | null>) {
       state.error = actions.payload;
     },
-    setAuthLoading(state, actions) {
+
+    setAuthLoading(state, actions: PayloadAction<boolean>) {
       state.authLoading = actions.payload;
     },
-    setSendingRequest(state, actions) {
+
+    setSendingRequest(state, actions: PayloadAction<boolean>) {
       state.sendingRequest = actions.payload;
     },
   },
@@ -48,7 +66,7 @@ export const authReducer = authSlice.reducer;
 
 //* THUNKS
 
-export function refreshToken({ updateUser }) {
+export function refreshToken({ updateUser }: { updateUser: boolean }) {
   console.log("refreshToken thunk");
   return async (dispatch) => {
     dispatch(authActions.setAuthLoading(true));
@@ -62,7 +80,7 @@ export function refreshToken({ updateUser }) {
         if (updateUser) {
           console.log("get user");
 
-          dispatch(updateUserCred());
+          dispatch(fetch());
         }
       }
     } catch (err) {
@@ -72,8 +90,7 @@ export function refreshToken({ updateUser }) {
     }
   };
 }
-
-export function login(email, pass) {
+export function login({ email, password }: LoginReq): AppThunk {
   return async (dispatch) => {
     dispatch(authActions.setError(null));
     dispatch(authActions.setSendingRequest(true));
@@ -81,7 +98,7 @@ export function login(email, pass) {
     try {
       //TODO: send login request
 
-      const cred = { email, password: pass };
+      const cred = { email, password: password };
 
       const req = await authInstance.post("/login", cred);
       const data = req.data;
@@ -92,10 +109,13 @@ export function login(email, pass) {
       }
 
       //TODO: request the backend developer to add default profile pic
-      dispatch(authActions.setUser({
-        ...data,
-        picture: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png",
-      }));
+      dispatch(
+        authActions.setUser({
+          ...data,
+          picture:
+            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png",
+        })
+      );
       //
     } catch (err) {
       const firstError = extractError(err);
@@ -108,15 +128,14 @@ export function login(email, pass) {
   };
 }
 
-export function signup({ name, email, password, bio }) {
+export function signup({ name, email, password, bio }: SignupReq): AppThunk {
   return async (dispatch) => {
     // TODO: send signup request
     dispatch(authActions.setError(null));
     dispatch(authActions.setSendingRequest(true));
 
-
     const cred = { name, email, password, bio };
-    console.log(name)
+    console.log(name);
 
     try {
       const req = await authInstance.post("/signup", cred);
@@ -139,7 +158,7 @@ export function signup({ name, email, password, bio }) {
   };
 }
 
-export function logout() {
+export function logout(): AppThunk {
   return async (dispatch) => {
     try {
       const req = await authInstance.delete("/logout");
@@ -153,16 +172,19 @@ export function logout() {
   };
 }
 
-export function updateUserCred() {
+export function fetch(): AppThunk {
   return async (dispatch) => {
     try {
       let req = await usersInstance.get("/me");
       const userData = req.data;
       //TODO: request the backend developer to add default profile pic
-      dispatch(authActions.setUser({
-        ...userData,
-        picture: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png",
-      }));
+      dispatch(
+        authActions.setUser({
+          ...userData,
+          picture:
+            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png",
+        })
+      );
     } catch (err) {
       console.error(err);
     }
@@ -171,5 +193,4 @@ export function updateUserCred() {
 
 //* SELECTORS
 
-export const getAuthError = (state) => state.auth.error;
-export const getAuth = (state) => state.auth;
+export const getAuth = (state: RootState) => state.auth;
