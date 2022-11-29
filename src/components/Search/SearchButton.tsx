@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function SearchButton() {
+const SearchButton = (): JSX.Element => {
   //TODO: Implement search functionality within the current page
   const navigate = useNavigate();
 
@@ -26,6 +26,6 @@ function SearchButton() {
       </svg>
     </button>
   );
-}
+};
 
 export default SearchButton;

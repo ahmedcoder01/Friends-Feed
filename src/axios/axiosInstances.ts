@@ -12,5 +12,3 @@ export const globalInstance = axios.create({
   baseURL: "https://friendsfeed.onrender.com/api/v1.0/",
   withCredentials: true,
 });
-
-

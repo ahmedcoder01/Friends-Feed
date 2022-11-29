@@ -1,27 +1,35 @@
-import React, { useRef } from "react";
+import React, { FC, FormEvent, useRef } from "react";
 import { useSelector } from "react-redux";
 import { getAuth } from "../../store/slices/authSlice";
-import Button from "../../components/UI/Button/Button";
-import usePublishPost from "../../hooks/usePublishPost";
+import Button from "../UI/Button/Button";
 import useToast from "../../hooks/useToast";
 import { useQuery } from "@tanstack/react-query";
-import { createPost } from "../../client";
 
-function InputBox({
+interface InputBoxProps {
+  onSubmit: (e: FormEvent, text: string) => void;
+  isLoading: boolean;
+  isError: boolean;
+  isValidationError: boolean;
+  onChange: () => void;
+
+  className?: string;
+}
+
+const InputBox: FC<InputBoxProps> = ({
   onSubmit,
   onChange,
   isLoading,
   isError,
   isValidationError,
-}) {
+}) => {
   //TODO: make this component reusable
   const { user } = useSelector(getAuth);
 
-  const textRef = useRef();
+  const textRef = useRef<HTMLTextAreaElement>(null);
 
   return (
     <form
-      onSubmit={(e) => {
+      onSubmit={(e: FormEvent<HTMLFormElement>) => {
         onSubmit(e, textRef.current.value);
       }}
       aria-label="Create a post"
@@ -51,6 +59,6 @@ function InputBox({
       </div>
     </form>
   );
-}
+};
 
 export default InputBox;

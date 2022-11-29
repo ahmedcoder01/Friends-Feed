@@ -8,7 +8,7 @@ import PostActions from "./PostActions";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import PostOwnerActions from "./PostOwnerActions";
 
-function Post({ data }) {
+function PostItem({ data }) {
   const { user } = useSelector(getAuth);
   const { user: postedUser, text, id, posted_at, image } = data;
 
@@ -35,4 +35,4 @@ function Post({ data }) {
   );
 }
 
-export default Post;
+export default PostItem;

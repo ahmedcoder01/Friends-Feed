@@ -1,13 +1,15 @@
-import React from "react";
+import React, { FC } from "react";
 import SearchButton from "../Search/SearchButton";
 import NotificationsButton from "../Notifications/NotificationsButton";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { logout } from "../../store/thunks";
 import { getAuth } from "../../store/slices/authSlice";
+import { useAppDispatch } from "../../store/hooks";
+import PATHS from "../../routes";
 
-function NavBar() {
-  const dispatch = useDispatch();
+const NavBar: FC = () => {
+  const dispatch = useAppDispatch();
   const { user } = useSelector(getAuth);
 
   function handleLogout() {
@@ -39,13 +41,13 @@ function NavBar() {
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <Link to="/home">Home</Link>
+              <Link to={PATHS.home.root}>Home</Link>
             </li>
             <li>
               <Link to={`/profile/${user?.id}`}>Profile</Link>
             </li>
             <li>
-              <Link to="/friends">Friends</Link>
+              <Link to={PATHS.friends.root}>Friends</Link>
             </li>
             <li>
               <button onClick={handleLogout}>Logout</button>
@@ -63,6 +65,6 @@ function NavBar() {
       </div>
     </nav>
   );
-}
+};
 
 export default NavBar;

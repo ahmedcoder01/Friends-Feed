@@ -1,15 +1,21 @@
-import React from "react";
+import React, { FC } from "react";
 import { Link } from "react-router-dom";
+import { User } from "../../types";
 import { getRelativeTime } from "../../utils/helpers";
 
-function ProfileWithTimestamp({ user, posted_at }) {
+interface Props {
+  user: User;
+  posted_at: string;
+}
+
+const ProfileWithTimestamp: FC<Props> = ({ user, posted_at }) => {
   return (
     <div className="">
       <div className="flex items-center justify-between p-4">
         <div className="flex items-center">
           <img
             className="w-10 h-10 rounded-full"
-            src={user.photo_url}
+            src={user?.picture}
             alt="avatar"
           />
           <div className="ml-3">
@@ -24,6 +30,6 @@ function ProfileWithTimestamp({ user, posted_at }) {
       </div>
     </div>
   );
-}
+};
 
 export default ProfileWithTimestamp;

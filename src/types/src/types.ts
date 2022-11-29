@@ -4,6 +4,16 @@ export interface User {
   name: string;
   picture: string | null;
   bio: string;
+  cover_photo?: string;
+}
+
+export interface AnotherUser extends User {
+  friendshipStatus:
+    | "NOT_FRIENDS"
+    | "FRIENDS"
+    | "PENDING_SENT_BY_YOU"
+    | "PENDING_SENT_BY_USER"
+    | "REJECTED_BY_USER";
 }
 
 // POST RELATED

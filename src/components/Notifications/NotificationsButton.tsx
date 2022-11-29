@@ -1,11 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { getNotifications } from "../../client";
-import useHTTP from "../../hooks/useHTTP";
 
-function NotificationsButton() {
-  const [hasUnreadNotifications, setHasUnreadNotifications] = useState(false);
+const NotificationsButton: FC = () => {
+  const [hasUnreadNotifications, setHasUnreadNotifications] =
+    useState<Boolean>(false);
 
+  //! specify the notification type
   const { data: notifications } = useQuery({
     queryKey: ["notifications"],
     queryFn: getNotifications,
@@ -39,6 +40,6 @@ function NotificationsButton() {
       </div>
     </button>
   );
-}
+};
 
 export default NotificationsButton;

@@ -1,4 +1,4 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
@@ -12,12 +12,14 @@ import NotFound from "./pages/NotFound/NotFound";
 import Search from "./pages/Search/Search";
 import { createPortal } from "react-dom";
 import { ToastContainer } from "react-toastify";
+import { useAppDispatch } from "./store/hooks";
+import PATHS from "./routes";
 import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { hasValidToken } = useSelector(getAuth);
-  const navigateToHome = <Navigate to="/home" replace={true} />;
+  const navigateToHome = <Navigate to={PATHS.home.root} replace={true} />;
 
   useEffect(() => {
     dispatch(refreshToken({ updateUser: true }));
@@ -28,17 +30,17 @@ function App() {
       <Routes>
         {/* Auth */}
         <Route
-          path="/login"
+          path={PATHS.login.root}
           element={!hasValidToken ? <Login /> : navigateToHome}
         />
         <Route
-          path="/signup"
+          path={PATHS.signup.root}
           element={!hasValidToken ? <Signup /> : navigateToHome}
         />
 
         {/* App */}
         <Route
-          path="/home"
+          path={PATHS.home.root}
           element={
             <ProtectedRoute>
               <Home />
@@ -55,7 +57,7 @@ function App() {
         />
 
         <Route
-          path="/search"
+          path={PATHS.search.root}
           element={
             <ProtectedRoute>
               <Search />

@@ -1,3 +1,4 @@
+import { useMutation, useQuery } from "@tanstack/react-query";
 import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Link } from "react-router-dom";
@@ -5,18 +6,16 @@ import useHTTP from "../../hooks/useHTTP";
 
 function PostOwnerActions({ postId }) {
   console.log(postId);
-  const {
-    response: deleteResponse,
-    error: deleteError,
-    loading: deleteLoading,
-    fetchData: deletePost,
-  } = useHTTP({
-    path: `/posts/${postId}`,
-    method: "DELETE",
+
+  const deleteMuation = useMutation({
+    mutationKey: "deletePost",
+    mutationFn: () => {
+      return deletePost();
+    },
   });
 
   async function deletePostHandler() {
-    await deletePost();
+    deleteMuation.mutate();
   }
 
   return (

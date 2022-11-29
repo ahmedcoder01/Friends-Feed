@@ -1,4 +1,4 @@
-export function extractError(err) {
+export function extractError(err: any): any {
   const data = err.response?.data;
 
   if (!(data?.message instanceof Object)) {
