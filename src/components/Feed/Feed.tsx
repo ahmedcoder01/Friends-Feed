@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import React, { Children, FC, useState } from "react";
+import React, { Children, FC, FormEvent, useState } from "react";
 import { createPostReq, getFeed } from "../../client";
 import InputBox from "../InputBox/InputBox";
 import PostItem from "../Post/PostItem";
@@ -8,7 +8,7 @@ import dummyFeed from "../../mock/feed.json";
 import { Post, PostReq } from "../../types";
 
 const Feed: FC = () => {
-  const [validationErr, setValidationErr] = useState(null);
+  const [validationErr, setValidationErr] = useState<boolean>(false);
 
   const {
     data: feed,
@@ -33,7 +33,7 @@ const Feed: FC = () => {
     },
   });
 
-  function handleCreatePost(e: SubmitEvent, text: string) {
+  function handleCreatePost(e: FormEvent, text: string) {
     e.preventDefault();
     console.log(text);
 
@@ -58,10 +58,10 @@ const Feed: FC = () => {
         <div className="flex flex-col items-center mt-20 ">
           {isFeedLoading && <p>Loading...</p>}
           {!feed && isFeedError && <p>Something went wrong</p>}
-          {feed &&
+          {/* {feed &&
             Children.toArray(
-              feed.map((post: Post) => <PostItem data={post} />)
-            )}
+              feed.map((post: Post) => <PostItem data={post}  />)
+            )} */}
         </div>
       </Container>
     </div>

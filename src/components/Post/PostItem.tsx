@@ -7,8 +7,22 @@ import ProfileWithTimestamp from "../ProfileWithTimestamp/ProfileWithTimestamp";
 import PostActions from "./PostActions";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import PostOwnerActions from "./PostOwnerActions";
+import { Post } from "../../types";
 
-function PostItem({ data }) {
+interface Props {
+  data: {
+    id: Pick<Post, "id">;
+    title: string;
+    body: string;
+    image: string;
+    posted_at: string;
+    text: string;
+    //TODO: change user type
+    user: any;
+  };
+}
+
+const PostItem = ({ data }: Props): JSX.Element => {
   const { user } = useSelector(getAuth);
   const { user: postedUser, text, id, posted_at, image } = data;
 
@@ -18,7 +32,7 @@ function PostItem({ data }) {
     <div className="card shadow-x w-full bg-base-300 mb-12">
       {/* user & post details */}
       <div className="flex justify-between ">
-        <ProfileWithTimestamp posted_at={posted_at} user={postedUser} />
+        <ProfileWithTimestamp timestamp={posted_at} user={postedUser} />
         {postOwner && <PostOwnerActions postId={id} />}
       </div>
 
@@ -33,6 +47,6 @@ function PostItem({ data }) {
       <PostActions postId={id} />
     </div>
   );
-}
+};
 
 export default PostItem;

@@ -15,10 +15,13 @@ import { ToastContainer } from "react-toastify";
 import { useAppDispatch } from "./store/hooks";
 import PATHS from "./routes";
 import "react-toastify/dist/ReactToastify.css";
+import { getUI } from "./store/slices/uiSlice";
+import Sidebar from "./components/Sidebar/Sidebar";
 
 function App() {
   const dispatch = useAppDispatch();
   const { hasValidToken } = useSelector(getAuth);
+  const { sidebarOpen } = useSelector(getUI);
   const navigateToHome = <Navigate to={PATHS.home.root} replace={true} />;
 
   useEffect(() => {
@@ -71,7 +74,10 @@ function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
 
-      {createPortal(<ToastContainer />, document.getElementById("toast"))}
+      {createPortal(<ToastContainer />, document.getElementById("toast")!)}
+      {/* portal for sidebar */}
+      {sidebarOpen &&
+        createPortal(<Sidebar />, document.getElementById("modals")!)}
     </>
   );
 }

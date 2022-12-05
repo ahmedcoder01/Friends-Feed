@@ -1,14 +1,19 @@
 import { useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import useHTTP from "../../hooks/useHTTP";
+import { likePost } from "../../client";
 import useToast from "../../hooks/useToast";
 import { getAuth } from "../../store/slices/authSlice";
+import { Post } from "../../types";
 import PostComments from "./PostComments";
 
-function PostActions({ postId }) {
-  const [isCommenting, setIsCommenting] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
+interface Props {
+  postId: Pick<Post, "id">;
+}
+
+const PostActions = ({ postId }: Props): JSX.Element => {
+  const [isCommenting, setIsCommenting] = useState<boolean>(false);
+  const [isLiked, setIsLiked] = useState<boolean>(false);
 
   const { user } = useSelector(getAuth);
   const notify = useToast();
@@ -54,6 +59,6 @@ function PostActions({ postId }) {
       {isCommenting && <PostComments postId={postId} />}
     </div>
   );
-}
+};
 
 export default PostActions;

@@ -1,23 +1,30 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Formik, Form } from "formik";
+import { Formik, Form, FormikHandlers } from "formik";
 import * as Yup from "yup";
-import Input from "../../components/UI/Input/Input";
 import Container from "../../components/UI/Container/Container";
 import Modal from "../../components/UI/Modal/Modal";
 import Logo from "../../components/UI/Logo/Logo";
 import Button from "../../components/UI/Button/Button";
 import { login } from "../../store/thunks";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import authActions, { getAuth } from "../../store/slices/authSlice";
 import { useEffect } from "react";
 import logo from "../../assets/images/app/logo.png";
 import { useRef } from "react";
+import Input from "../../components/UI/Input/Input";
+import { useAppDispatch } from "../../store/hooks";
 
-const initialValues = {
+interface FormikLoginFields {
+  email: string;
+  password: string;
+}
+
+const initialValues: FormikLoginFields = {
   email: "",
   password: "",
 };
+
 const validationSchema = Yup.object().shape({
   email: Yup.string().email().required("email is required"),
   password: Yup.string().required("password is required"),
@@ -36,15 +43,15 @@ const formInputs = [
   },
 ];
 
-const Login = () => {
+const Login = (): JSX.Element => {
   const { error: authError, sendingRequest } = useSelector(getAuth);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(authActions.setError(null));
   }, [dispatch]);
 
-  function submitHandler({ email, password }) {
+  function submitHandler({ email, password }: FormikLoginFields) {
     dispatch(login({ email, password }));
   }
 
@@ -60,7 +67,7 @@ const Login = () => {
             validationSchema={validationSchema}
             onSubmit={submitHandler}
           >
-            <Form>
+            <Form className="sm:w-96">
               {formInputs.map((input) => (
                 <Input
                   key={input.name}

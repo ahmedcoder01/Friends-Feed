@@ -1,15 +1,20 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import React, { Children, useEffect, useRef } from "react";
+import React, { Children, FormEvent, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { createComment, getCommentsByPostId } from "../../client";
-import useHTTP from "../../hooks/useHTTP";
 import { getAuth } from "../../store/slices/authSlice";
 import ProfileWithTimestamp from "../ProfileWithTimestamp/ProfileWithTimestamp";
 import Button from "../UI/Button/Button";
 import useToast from "../../hooks/useToast";
+import { Comment, Post } from "../../types";
+import { string } from "yup";
 
-function PostComments({ postId }) {
-  const commentInputRef = useRef();
+interface Props {
+  postId: Pick<Post, "id">;
+}
+
+const PostComments = ({ postId }: Props) => {
+  const commentInputRef = useRef<HTMLInputElement>();
   const { user } = useSelector(getAuth);
   const notify = useToast();
 
@@ -17,16 +22,16 @@ function PostComments({ postId }) {
 
   const {
     data: commentsObj,
-    commentsError,
-    commentsLoading,
+    error: commentsError,
+    isLoading: commentsLoading,
   } = useQuery({
     queryKey: ["comments", postId],
-    queryFn: ({ queryKey }) => getCommentsByPostId(queryKey[1]),
+    queryFn: ({ queryKey }) => getCommentsByPostId(queryKey[1] as string),
   });
 
   const commentMuation = useMutation({
     mutationFn: () => {
-      return createComment(postId, commentInputRef.current.value);
+      return createComment(postId, { text: commentInputRef.current?.value });
     },
     onSuccess: () => {
       commentInputRef.current.value = "";
@@ -39,7 +44,7 @@ function PostComments({ postId }) {
   });
 
   // event handlers
-  async function addCommentHandler(e) {
+  async function addCommentHandler(e: FormEvent) {
     console.log("add comment handler");
     e.preventDefault();
     const commentText = commentInputRef.current.value;
@@ -61,7 +66,7 @@ function PostComments({ postId }) {
     <div className="flex flex-col items-center">
       {commentsObj &&
         Children.toArray(
-          commentsObj.comments.map((comment) => (
+          commentsObj.comments.map((comment: Comment) => (
             <div className="flex flex-col items-center ">
               <ProfileWithTimestamp
                 user={comment.user}
@@ -80,7 +85,7 @@ function PostComments({ postId }) {
       {/* comments */}
       <div className="mb-5">
         {commentsLoading && <p>Loading...</p>}
-        {commentsError && <p>Error: {commentsError}</p>}
+        {commentsError && <p>Something went wrong</p>}
 
         {hasEmptyComments ? emptyCommentsMsg : comments}
       </div>
@@ -112,6 +117,6 @@ function PostComments({ postId }) {
       </form>
     </div>
   );
-}
+};
 
 export default PostComments;

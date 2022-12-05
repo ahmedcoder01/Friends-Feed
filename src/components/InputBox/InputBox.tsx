@@ -11,7 +11,6 @@ interface InputBoxProps {
   isError: boolean;
   isValidationError: boolean;
   onChange: () => void;
-
   className?: string;
 }
 
@@ -30,14 +29,17 @@ const InputBox: FC<InputBoxProps> = ({
   return (
     <form
       onSubmit={(e: FormEvent<HTMLFormElement>) => {
-        onSubmit(e, textRef.current.value);
+        if (!textRef.current) return;
+        onSubmit(e, textRef.current?.value);
+        //TODO: imporve UX here so that the field doesn't get cleared if error occurs
+        textRef.current.value = "";
       }}
       aria-label="Create a post"
       className="mt-10 bg-base-300 rounded-xl p-5 flex flex-col gap-4"
     >
       <div className="flex">
         <img
-          src={user?.picture}
+          src={user?.picture || undefined}
           alt="profile pic"
           className="rounded-full w-11 h-11 mr-4"
         />
@@ -53,7 +55,7 @@ const InputBox: FC<InputBoxProps> = ({
       </div>
 
       <div className="flex justify-end">
-        <Button type="submit" loading={isLoading} disabled={true}>
+        <Button type="submit" loading={isLoading}>
           Post
         </Button>
       </div>

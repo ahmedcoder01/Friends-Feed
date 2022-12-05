@@ -38,11 +38,7 @@ export interface Comment {
   text: string;
   createdAt: string;
   postId: number;
-  user: {
-    id: number;
-    name: string;
-    picture: string | null;
-  };
+  user: User | AnotherUser;
 }
 
 export interface Like {

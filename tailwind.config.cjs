@@ -1,13 +1,25 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
-    extend: {},
-  },
-  plugins: [require("daisyui")],
+    extend: {
+      colors: {
+        "primary": "#0075ff",
+        "secondary": "#ffed4a",
+        "black": "#222222",
+      },
 
-  daisyui: {
-    themes: ["light", "dark", "cupcake", "bumblebee", "emerald", "corporate", "synthwave", "retro", "cyberpunk", "valentine", "halloween", "garden", "forest", "aqua", "lofi", "pastel", "fantasy", "wireframe", "black", "luxury", "dracula", "cmyk", "autumn", "business", "acid", "lemonade", "night", "coffee", "winter"],
+
+
+
+
+
+    },
   },
+
+
+  plugins: [require("daisyui")],
 }

@@ -5,10 +5,10 @@ import { getRelativeTime } from "../../utils/helpers";
 
 interface Props {
   user: User;
-  posted_at: string;
+  timestamp: string;
 }
 
-const ProfileWithTimestamp: FC<Props> = ({ user, posted_at }) => {
+const ProfileWithTimestamp: FC<Props> = ({ user, timestamp }) => {
   return (
     <div className="">
       <div className="flex items-center justify-between p-4">
@@ -23,7 +23,7 @@ const ProfileWithTimestamp: FC<Props> = ({ user, posted_at }) => {
               {<Link to={`/profile/${user.id}`}>{user.name}</Link>}
             </p>
             <p className="text-sm text-gray-400">
-              {getRelativeTime(posted_at)}
+              {getRelativeTime(timestamp)}
             </p>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import { AppThunk } from "./../thunks";
 import { LoginReq, SignupReq } from "./../../types/src/api";
-import { RootState } from "./../store";
+import { RootState } from "..";
 import { User } from "./../../types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { extractError } from "../../utils/error";
@@ -10,7 +10,7 @@ import { Dispatch, ReducerState } from "react";
 type DefaultRootState = {
   hasValidToken: boolean;
   user: User | null;
-  error: object | null;
+  error: string | null;
   authLoading: boolean;
   sendingRequest: boolean;
 };
@@ -45,7 +45,7 @@ const authSlice = createSlice({
       state.hasValidToken = false;
     },
 
-    setError(state, actions: PayloadAction<object | null>) {
+    setError(state, actions: PayloadAction<string | null>) {
       state.error = actions.payload;
     },
 
@@ -66,7 +66,11 @@ export const authReducer = authSlice.reducer;
 
 //* THUNKS
 
-export function refreshToken({ updateUser }: { updateUser: boolean }) {
+export function refreshToken({
+  updateUser,
+}: {
+  updateUser: boolean;
+}): AppThunk {
   console.log("refreshToken thunk");
   return async (dispatch) => {
     dispatch(authActions.setAuthLoading(true));

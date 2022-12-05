@@ -7,6 +7,7 @@ import { logout } from "../../store/thunks";
 import { getAuth } from "../../store/slices/authSlice";
 import { useAppDispatch } from "../../store/hooks";
 import PATHS from "../../routes";
+import Sidebar from "../Sidebar/Sidebar";
 
 const NavBar: FC = () => {
   const dispatch = useAppDispatch();
@@ -19,7 +20,7 @@ const NavBar: FC = () => {
   return (
     <nav className="navbar bg-base-100">
       <div className="navbar-start">
-        <div className="dropdown">
+        {/* <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +54,7 @@ const NavBar: FC = () => {
               <button onClick={handleLogout}>Logout</button>
             </li>
           </ul>
-        </div>
+        </div> */}
       </div>
       <div className="navbar-center">
         <a className="btn btn-ghost normal-case text-xl">Friends Feed</a>

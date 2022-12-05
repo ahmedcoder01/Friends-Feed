@@ -1,7 +1,7 @@
 import { Player } from "@lottiefiles/react-lottie-player";
 import React from "react";
 
-function Loader() {
+const Loader = (): JSX.Element => {
   return (
     <div className="h-screen w-screen flex items-center justify-center">
       <Player
@@ -12,6 +12,6 @@ function Loader() {
       ></Player>
     </div>
   );
-}
+};
 
 export default Loader;

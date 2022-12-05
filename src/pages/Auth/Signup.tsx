@@ -2,16 +2,25 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
-import Input from "../../components/UI/Input/Input";
 import Container from "../../components/UI/Container/Container";
 import Modal from "../../components/UI/Modal/Modal";
 import Logo from "../../components/UI/Logo/Logo";
 import Button from "../../components/UI/Button/Button";
 import { signup } from "../../store/thunks";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import authActions, { getAuth } from "../../store/slices/authSlice";
+import { useAppDispatch } from "../../store/hooks";
+import Input from "../../components/UI/Input/Input";
 
-const initialValues = {
+interface FormikSignupFields {
+  name: string;
+  email: string;
+  password: string;
+  confirmPassword?: string;
+  bio: string;
+}
+
+const initialValues: FormikSignupFields = {
   name: "",
   email: "",
   password: "",
@@ -20,7 +29,7 @@ const initialValues = {
 const validationSchema = Yup.object().shape({
   name: Yup.string()
     .required("name is required")
-    .min("3", "name must be at least 3 characters long"),
+    .min(3, "name must be at least 3 characters long"),
   email: Yup.string().email("invalid email").required("email is required"),
   password: Yup.string()
     .required("password is required")
@@ -61,16 +70,16 @@ const formInputs = [
   },
 ];
 
-const Signup = () => {
+const Signup = (): JSX.Element => {
   const { error: authError, sendingRequest } = useSelector(getAuth);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(authActions.setError(null));
   }, [dispatch]);
 
-  function submitHandler(values) {
-    console.log("hello");
+  function submitHandler(values: FormikSignupFields) {
+    console.log("signup values", values);
     const { confirmPassword, ...signupCred } = values;
     dispatch(signup(signupCred));
   }
@@ -87,7 +96,7 @@ const Signup = () => {
             validationSchema={validationSchema}
             onSubmit={submitHandler}
           >
-            <Form>
+            <Form className="sm:w-96">
               {formInputs.map((input) => (
                 <Input
                   key={input.name}

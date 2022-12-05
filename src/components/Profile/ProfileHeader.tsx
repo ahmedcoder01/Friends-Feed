@@ -12,10 +12,13 @@ interface ProfileHeaderProps {
 
 const ProfileHeader: FC<ProfileHeaderProps> = ({ user: profileUser }) => {
   //TODO: handle friend requests in another component
-  const [friendRequestSent, setFriendRequestSent] = useState(false);
+  const [friendRequestSent, setFriendRequestSent] = useState<boolean>(false);
 
   const { user } = useSelector(getAuth);
-  const isSameUser = Number(user?.id) === Number(profileUser.id);
+  console.log(profileUser);
+  const isSameUser = Number(user?.id) === Number(profileUser?.id);
+  console.log(profileUser);
+
   // check if they are friends
 
   //* REQUESTS
@@ -41,6 +44,7 @@ const ProfileHeader: FC<ProfileHeaderProps> = ({ user: profileUser }) => {
   async function changeProfilePicHandler(
     e: React.ChangeEvent<HTMLInputElement>
   ) {
+    if (!e.target.files) return;
     const file = e.target.files[0];
     updatePpMutation.mutate(file);
   }
@@ -52,7 +56,7 @@ const ProfileHeader: FC<ProfileHeaderProps> = ({ user: profileUser }) => {
   return (
     <>
       {/* user header */}
-      <div className=" bg-zinc-900 h-80">
+      <div className=" bg-zinc-900 h-72">
         {profileUser?.cover_photo && (
           <img src={profileUser.cover_photo} alt="cover photo" />
         )}
@@ -63,7 +67,7 @@ const ProfileHeader: FC<ProfileHeaderProps> = ({ user: profileUser }) => {
           <div className="flex items-center  max-sm:flex-col">
             <div className="rounded-full relative bottom-20 h-24">
               <img
-                src={profileUser?.picture}
+                src={profileUser?.picture || undefined}
                 alt="profile"
                 className="rounded-full h-44 w-44 bg-zinc-900 border whitespace-nowrap overflow-hidden"
                 style={{ textIndent: "100%" }}

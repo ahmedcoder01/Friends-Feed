@@ -6,27 +6,27 @@ interface ButtonProps {
   className?: string;
   loading?: boolean;
   style?: "primary" | "secondary" | "success" | "error" | "warning";
+  [key: string]: any;
 }
 
-function Button({
+const Button = ({
   children,
-  full = "false",
-  type = "button",
+  full = false,
   className = "",
   loading = false,
   style = "primary",
   ...props
-}) {
+}: ButtonProps): JSX.Element => {
   return (
     <button
-      className={`btn btn-active btn-${style} ${loading ? "loading" : ""}  ${
-        full ? "btn-wide" : ""
+      className={`btn btn-active btn-${style}  ${loading ? "loading" : ""}  ${
+        full ? "w-full" : ""
       } ${className}`}
       {...props}
     >
       {children}
     </button>
   );
-}
+};
 
 export default Button;

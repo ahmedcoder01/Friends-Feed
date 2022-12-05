@@ -1,6 +1,6 @@
 import { PostReq } from "./types/src/api";
 import { globalInstance } from "./axios/axiosInstances";
-import { Comment, Like, Post } from "./types";
+import { Comment, CommentReq, Like, Post } from "./types";
 
 // USER
 
@@ -56,7 +56,7 @@ export const deletePost = async (postId: Pick<Post, "id">) => {
 export const getFeed = async () => {
   const req = await globalInstance({
     method: "GET",
-    url: `/posts`,
+    url: `/feed`,
   });
   return req.data;
 };
@@ -80,7 +80,7 @@ export const unlikePost = async (
   return req.data;
 };
 
-export const getCommentsByPostId = async (postId: Pick<Comment, "id">) => {
+export const getCommentsByPostId = async (postId: string) => {
   const req = await globalInstance({
     method: "GET",
     url: `/posts/${postId}/comments`,
@@ -90,12 +90,12 @@ export const getCommentsByPostId = async (postId: Pick<Comment, "id">) => {
 
 export const createComment = async (
   postId: Pick<Comment, "id">,
-  comment: Comment
+  comment: CommentReq
 ) => {
   const req = await globalInstance({
     method: "POST",
     url: `/posts/${postId}/comments`,
-    data: { text: comment },
+    data: comment,
   });
   return req.data;
 };

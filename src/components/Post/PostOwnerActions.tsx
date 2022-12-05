@@ -2,15 +2,20 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import React from "react";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { Link } from "react-router-dom";
-import useHTTP from "../../hooks/useHTTP";
+import { deletePost } from "../../client";
+import { Post } from "../../types";
 
-function PostOwnerActions({ postId }) {
+interface Props {
+  postId: Pick<Post, "id">;
+}
+
+const PostOwnerActions = ({ postId }: Props): JSX.Element => {
   console.log(postId);
 
   const deleteMuation = useMutation({
-    mutationKey: "deletePost",
+    mutationKey: ["deletePost"],
     mutationFn: () => {
-      return deletePost();
+      return deletePost(postId);
     },
   });
 
@@ -37,6 +42,6 @@ function PostOwnerActions({ postId }) {
       </ul>
     </div>
   );
-}
+};
 
 export default PostOwnerActions;

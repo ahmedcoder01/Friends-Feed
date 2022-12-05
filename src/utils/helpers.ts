@@ -20,3 +20,10 @@ export function getRelativeTime(time: string): string {
     return relativeTimeFormat.format(-diffInMonths, "month");
   return relativeTimeFormat.format(-diffInYears, "year");
 }
+
+export const isMobileOrTablet = (): boolean => {
+  return (
+    typeof window.orientation !== "undefined" ||
+    navigator.userAgent.indexOf("IEMobile") !== -1
+  );
+};

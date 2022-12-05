@@ -1,7 +1,12 @@
 import React from "react";
 import logo from "../../../assets/images/app/logo.png";
 
-function Logo({ size = "sm", className }) {
+interface Props {
+  size: "sm" | "md" | "lg";
+  className?: string;
+}
+
+const Logo = ({ size = "sm", className }: Props): JSX.Element => {
   const sizes = {
     sm: "w-16",
     md: "w-24",
@@ -9,6 +14,6 @@ function Logo({ size = "sm", className }) {
   };
 
   return <img src={logo} alt="Friends Feed" className={sizes[size]} />;
-}
+};
 
 export default Logo;
