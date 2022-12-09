@@ -9,10 +9,11 @@ const Home = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   return (
-    <div className="sm:flex">
-      <Sidebar />
-      <div className="flex-grow">
-        <NavBar />
+    <div className="">
+      <NavBar />
+
+      <div className="flex">
+        <Sidebar />
 
         <Feed />
       </div>

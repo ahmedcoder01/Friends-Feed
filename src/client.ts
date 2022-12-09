@@ -45,7 +45,7 @@ export const createPostReq = async (post: PostReq) => {
   return req.data;
 };
 
-export const deletePost = async (postId: Pick<Post, "id">) => {
+export const deletePost = async (postId: number) => {
   const req = await globalInstance({
     method: "DELETE",
     url: `/posts/${postId}`,
@@ -56,12 +56,13 @@ export const deletePost = async (postId: Pick<Post, "id">) => {
 export const getFeed = async () => {
   const req = await globalInstance({
     method: "GET",
-    url: `/feed`,
+    //! change to feed when microservice is ready
+    url: `/feeds`,
   });
   return req.data;
 };
 
-export const likePost = async (postId: Pick<Post, "id">) => {
+export const likePost = async (postId: number) => {
   const req = await globalInstance({
     method: "POST",
     url: `/posts/${postId}/like`,
@@ -88,10 +89,7 @@ export const getCommentsByPostId = async (postId: string) => {
   return req.data;
 };
 
-export const createComment = async (
-  postId: Pick<Comment, "id">,
-  comment: CommentReq
-) => {
+export const createComment = async (postId: number, comment: CommentReq) => {
   const req = await globalInstance({
     method: "POST",
     url: `/posts/${postId}/comments`,

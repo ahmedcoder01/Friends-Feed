@@ -8,7 +8,7 @@ import { Post } from "../../types";
 import PostComments from "./PostComments";
 
 interface Props {
-  postId: Pick<Post, "id">;
+  postId: number;
 }
 
 const PostActions = ({ postId }: Props): JSX.Element => {
@@ -32,7 +32,6 @@ const PostActions = ({ postId }: Props): JSX.Element => {
   });
 
   async function addLikeHandler() {
-    console.log("like");
     // await likePost();
     likeMutation.mutate();
   }

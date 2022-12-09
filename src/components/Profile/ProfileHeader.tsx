@@ -17,7 +17,6 @@ const ProfileHeader: FC<ProfileHeaderProps> = ({ user: profileUser }) => {
   const { user } = useSelector(getAuth);
   console.log(profileUser);
   const isSameUser = Number(user?.id) === Number(profileUser?.id);
-  console.log(profileUser);
 
   // check if they are friends
 

@@ -10,7 +10,10 @@ module.exports = {
         "primary": "#0075ff",
         "secondary": "#ffed4a",
         "black": "#222222",
+
       },
+
+
 
 
 

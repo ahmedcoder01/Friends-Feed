@@ -3,15 +3,19 @@ import React, { Children, FormEvent, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { createComment, getCommentsByPostId } from "../../client";
 import { getAuth } from "../../store/slices/authSlice";
-import ProfileWithTimestamp from "../ProfileWithTimestamp/ProfileWithTimestamp";
 import Button from "../UI/Button/Button";
 import useToast from "../../hooks/useToast";
 import { Comment, Post } from "../../types";
 import { string } from "yup";
+import { getRelativeTime } from "../../utils/helpers";
+import { Link } from "react-router-dom";
 
 interface Props {
-  postId: Pick<Post, "id">;
+  postId: number;
 }
+
+const defaultAvatar =
+  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
 
 const PostComments = ({ postId }: Props) => {
   const commentInputRef = useRef<HTMLInputElement>(null);
@@ -24,6 +28,7 @@ const PostComments = ({ postId }: Props) => {
     data: commentsObj,
     error: commentsError,
     isLoading: commentsLoading,
+    refetch: commentsRefetch,
   } = useQuery({
     queryKey: ["comments", postId],
     queryFn: ({ queryKey }) => getCommentsByPostId(queryKey[1] as string),
@@ -45,13 +50,12 @@ const PostComments = ({ postId }: Props) => {
 
   // event handlers
   async function addCommentHandler(e: FormEvent) {
-    console.log("add comment handler");
     e.preventDefault();
 
     //! maybe no value?
     const commentText = commentInputRef.current!.value;
-    commentMuation.mutate();
-    console.log(commentText);
+    await commentMuation.mutateAsync();
+    commentsRefetch();
   }
 
   // comments data formatting
@@ -65,21 +69,36 @@ const PostComments = ({ postId }: Props) => {
   );
 
   const comments = (
-    <div className="flex flex-col items-center">
+    <ul className="flex flex-col items-center gap-7">
       {commentsObj &&
         Children.toArray(
           commentsObj.comments.map((comment: Comment) => (
-            <div className="flex flex-col items-center ">
-              <ProfileWithTimestamp
-                user={comment.user}
-                timestamp={comment.createdAt}
-              />
-              <p className="text-md font-semibold">{comment.text}</p>
-              <p className="text-md font-semibold">{comment.user.name}</p>
-            </div>
+            <li className="flex items-center w-full">
+              <div className="flex items-center">
+                <img
+                  className="w-10 h-10 rounded-full"
+                  src={comment.user.picture || defaultAvatar}
+                  alt="avatar"
+                />
+                <div className="ml-4 flex flex-col">
+                  <div className=" flex items-center gap-3">
+                    <Link to={`/profile/${comment.user.id}`}>
+                      {comment.user.name}
+                    </Link>
+                    <p className="text-xs text-gray-400">
+                      {getRelativeTime(comment.createdAt)}
+                    </p>
+                  </div>
+
+                  <p className="text-sm text-left text-gray-400">
+                    {comment.text}
+                  </p>
+                </div>
+              </div>
+            </li>
           ))
         )}
-    </div>
+    </ul>
   );
 
   return (

@@ -1,10 +1,15 @@
 import React, { FC } from "react";
 import { Link } from "react-router-dom";
-import { User } from "../../types";
+import { AnotherUser, User } from "../../types";
 import { getRelativeTime } from "../../utils/helpers";
 
 interface Props {
-  user: User;
+  user: {
+    id: number;
+    name: string;
+    picture: string | null;
+    // email?: string;
+  };
   timestamp: string;
 }
 
@@ -19,7 +24,7 @@ const ProfileWithTimestamp: FC<Props> = ({ user, timestamp }) => {
             alt="avatar"
           />
           <div className="ml-3">
-            <p className="font-bold">
+            <p className="font-bold text-primary">
               {<Link to={`/profile/${user.id}`}>{user.name}</Link>}
             </p>
             <p className="text-sm text-gray-400">

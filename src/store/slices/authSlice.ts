@@ -71,7 +71,6 @@ export function refreshToken({
 }: {
   updateUser: boolean;
 }): AppThunk {
-  console.log("refreshToken thunk");
   return async (dispatch) => {
     dispatch(authActions.setAuthLoading(true));
 
@@ -81,16 +80,27 @@ export function refreshToken({
       if (req.status === 200) {
         dispatch(authActions.setHasValidToken(true));
         console.log("success refresh");
-        if (updateUser) {
-          console.log("get user");
+        if (!updateUser) return;
 
-          dispatch(fetch());
+        try {
+          let req = await usersInstance.get("/me");
+          const userData = req.data;
+          //TODO: request the backend developer to add default profile pic
+          dispatch(
+            authActions.setUser({
+              ...userData,
+              picture:
+                "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png",
+            })
+          );
+        } catch (err) {
+          console.error(err);
+        } finally {
+          dispatch(authActions.setAuthLoading(false));
         }
       }
     } catch (err) {
       dispatch(authActions.setHasValidToken(false));
-    } finally {
-      dispatch(authActions.setAuthLoading(false));
     }
   };
 }
@@ -139,12 +149,10 @@ export function signup({ name, email, password, bio }: SignupReq): AppThunk {
     dispatch(authActions.setSendingRequest(true));
 
     const cred = { name, email, password, bio };
-    console.log(name);
 
     try {
       const req = await authInstance.post("/signup", cred);
       const data = req.data;
-      console.log(data);
 
       if (req.status === 500) {
         throw new Error("Cannot create account at the moment");
@@ -172,25 +180,6 @@ export function logout(): AppThunk {
       }
     } catch (err) {
       console.log(err);
-    }
-  };
-}
-
-export function fetch(): AppThunk {
-  return async (dispatch) => {
-    try {
-      let req = await usersInstance.get("/me");
-      const userData = req.data;
-      //TODO: request the backend developer to add default profile pic
-      dispatch(
-        authActions.setUser({
-          ...userData,
-          picture:
-            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png",
-        })
-      );
-    } catch (err) {
-      console.error(err);
     }
   };
 }

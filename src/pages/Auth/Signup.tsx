@@ -79,7 +79,6 @@ const Signup = (): JSX.Element => {
   }, [dispatch]);
 
   function submitHandler(values: FormikSignupFields) {
-    console.log("signup values", values);
     const { confirmPassword, ...signupCred } = values;
     dispatch(signup(signupCred));
   }

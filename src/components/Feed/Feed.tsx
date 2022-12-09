@@ -10,6 +10,7 @@ import { Post, PostReq } from "../../types";
 const Feed: FC = () => {
   const [validationErr, setValidationErr] = useState<boolean>(false);
 
+  // FEED POSTS
   const {
     data: feed,
     isLoading: isFeedLoading,
@@ -17,11 +18,12 @@ const Feed: FC = () => {
   } = useQuery({
     queryKey: ["feed"],
     queryFn: getFeed,
-    retry: 1,
-    //! remove dummy data once the microservice runs
-    initialData: dummyFeed,
+    retry: false,
+    //TODO: refresh every 4 mins (staleTime)
+    staleTime: Infinity,
   });
 
+  // CREATE POST
   const {
     mutate: createPost,
     isLoading,
@@ -35,7 +37,6 @@ const Feed: FC = () => {
 
   function handleCreatePost(e: FormEvent, text: string) {
     e.preventDefault();
-    console.log(text);
 
     const isEmpty = text.trim().length === 0;
     if (isEmpty) {
@@ -46,24 +47,31 @@ const Feed: FC = () => {
   }
 
   return (
-    <div>
-      <Container>
-        <InputBox
-          onSubmit={handleCreatePost}
-          onChange={() => setValidationErr(false)}
-          isLoading={isLoading}
-          isError={isError}
-          isValidationError={validationErr}
-        />
-        <div className="flex flex-col items-center mt-20 ">
-          {isFeedLoading && <p>Loading...</p>}
-          {!feed && isFeedError && <p>Something went wrong</p>}
-          {/* {feed &&
+    <div className="flex items-center flex-grow justify-center">
+      <div className="max-w-2xl">
+        <Container>
+          <InputBox
+            onSubmit={handleCreatePost}
+            onChange={() => setValidationErr(false)}
+            isLoading={isLoading}
+            isError={isError}
+            isValidationError={validationErr}
+          />
+          <div className="flex flex-col items-center mt-20 ">
+            {isFeedLoading && <p>Loading...</p>}
+            {/* {!feed && isFeedError && <p>Something went wrong</p>} */}
+            {/* //! remove dummy data once the microservice runs */}
+            {/* {feed &&
             Children.toArray(
-              feed.map((post: Post) => <PostItem data={post}  />)
+              feed.map((post: Post) => <PostItem data={post} />)
             )} */}
-        </div>
-      </Container>
+            {dummyFeed &&
+              Children.toArray(
+                dummyFeed.map((post: any) => <PostItem data={post} />)
+              )}
+          </div>
+        </Container>
+      </div>
     </div>
   );
 };

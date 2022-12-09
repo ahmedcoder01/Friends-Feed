@@ -10,10 +10,4 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   AnyAction
 >;
 
-export {
-  signup,
-  login,
-  logout,
-  refreshToken,
-  fetch as updateUserCred,
-} from "./slices/authSlice";
+export { signup, login, logout, refreshToken } from "./slices/authSlice";

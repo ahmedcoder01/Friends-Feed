@@ -16,28 +16,35 @@ import { useAppDispatch } from "./store/hooks";
 import PATHS from "./routes";
 import "react-toastify/dist/ReactToastify.css";
 import { getUI } from "./store/slices/uiSlice";
-import Sidebar from "./components/Sidebar/Sidebar";
 
 function App() {
   const dispatch = useAppDispatch();
-  const { hasValidToken } = useSelector(getAuth);
+  const { hasValidToken, authLoading } = useSelector(getAuth);
+  const { sidebarOpen } = useSelector(getUI);
   const navigateToHome = <Navigate to={PATHS.home.root} replace={true} />;
 
   useEffect(() => {
     dispatch(refreshToken({ updateUser: true }));
-  }, [dispatch]);
+
+    // refresh token every 5 minutes
+    const interval = setInterval(() => {
+      dispatch(refreshToken({ updateUser: true }));
+    }, 5 * 60 * 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   return (
-    <div className="">
+    <div className={`${sidebarOpen ? "h-screen overflow-hidden" : ""}`}>
       <Routes>
         {/* Auth */}
         <Route
           path={PATHS.login.root}
-          element={!hasValidToken ? <Login /> : navigateToHome}
+          element={!authLoading && !hasValidToken ? <Login /> : navigateToHome}
         />
         <Route
           path={PATHS.signup.root}
-          element={!hasValidToken ? <Signup /> : navigateToHome}
+          element={!authLoading && !hasValidToken ? <Signup /> : navigateToHome}
         />
 
         {/* App */}

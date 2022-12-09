@@ -15,7 +15,6 @@ const uiSlice = createSlice({
   initialState,
   reducers: {
     toggleSidebar: (state) => {
-      console.log("toggleSidebar");
       state.sidebarOpen = !state.sidebarOpen;
     },
   },

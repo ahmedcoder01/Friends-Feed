@@ -11,11 +11,7 @@ interface ProtectedRouteProps {
 const ProtectedRoute = ({ children }: ProtectedRouteProps): JSX.Element => {
   const { hasValidToken, authLoading } = useSelector(getAuth);
 
-  if (hasValidToken) {
-    return children;
-  }
-
-  if (authLoading && !hasValidToken) {
+  if (authLoading) {
     return <Loader />;
   }
 
@@ -23,7 +19,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps): JSX.Element => {
     return <Navigate to="/login" state={false} />;
   }
 
-  return <></>;
+  return children;
 };
 
 export default ProtectedRoute;

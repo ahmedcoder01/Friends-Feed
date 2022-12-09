@@ -26,7 +26,7 @@ export interface Post {
     id: number;
     name: string;
     picture: string | null;
-    email: string;
+    // email?: string;
   };
 
   likesCount: number;

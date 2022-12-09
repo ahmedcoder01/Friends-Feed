@@ -56,7 +56,7 @@ const Sidebar = (props: Props): JSX.Element => {
         sidebarOpen ? "" : "max-sm:hidden"
       }`}
     >
-      <div className="fixed top-0 left-0 px-4 py-7  h-screen max-sm:w-screen z-40 max-sm:bg-black">
+      <div className="fixed sm:top-16 max-sm:top-0 left-0 px-4 py-7  h-screen max-sm:w-screen z-40 max-sm:bg-black">
         <div className="max-sm:flex sm:hidden w-full justify-end">
           <button
             className="btn btn-ghost"

@@ -6,12 +6,10 @@ import { deletePost } from "../../client";
 import { Post } from "../../types";
 
 interface Props {
-  postId: Pick<Post, "id">;
+  postId: number;
 }
 
 const PostOwnerActions = ({ postId }: Props): JSX.Element => {
-  console.log(postId);
-
   const deleteMuation = useMutation({
     mutationKey: ["deletePost"],
     mutationFn: () => {
