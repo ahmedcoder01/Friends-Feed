@@ -101,6 +101,7 @@ export function refreshToken({
       }
     } catch (err) {
       dispatch(authActions.setHasValidToken(false));
+      dispatch(authActions.setAuthLoading(false));
     }
   };
 }
@@ -136,7 +137,6 @@ export function login({ email, password }: LoginReq): AppThunk {
       dispatch(
         authActions.setError(firstError || "Cannot login at the moment")
       );
-      dispatch(authActions.setAuthLoading(false));
     } finally {
       dispatch(authActions.setSendingRequest(false));
     }
