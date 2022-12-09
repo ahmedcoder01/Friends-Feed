@@ -14,7 +14,7 @@ interface Props {
 }
 
 const PostComments = ({ postId }: Props) => {
-  const commentInputRef = useRef<HTMLInputElement>();
+  const commentInputRef = useRef<HTMLInputElement>(null);
   const { user } = useSelector(getAuth);
   const notify = useToast();
 
@@ -31,10 +31,10 @@ const PostComments = ({ postId }: Props) => {
 
   const commentMuation = useMutation({
     mutationFn: () => {
-      return createComment(postId, { text: commentInputRef.current?.value });
+      return createComment(postId, { text: commentInputRef.current!.value });
     },
     onSuccess: () => {
-      commentInputRef.current.value = "";
+      commentInputRef.current && (commentInputRef.current.value = "");
     },
     onError: () => {
       console.log("error");
@@ -47,7 +47,9 @@ const PostComments = ({ postId }: Props) => {
   async function addCommentHandler(e: FormEvent) {
     console.log("add comment handler");
     e.preventDefault();
-    const commentText = commentInputRef.current.value;
+
+    //! maybe no value?
+    const commentText = commentInputRef.current!.value;
     commentMuation.mutate();
     console.log(commentText);
   }
@@ -86,8 +88,8 @@ const PostComments = ({ postId }: Props) => {
       <div className="mb-5">
         {commentsLoading && <p>Loading...</p>}
         {commentsError && <p>Something went wrong</p>}
-
-        {hasEmptyComments ? emptyCommentsMsg : comments}
+        {hasEmptyComments && emptyCommentsMsg}
+        {!hasEmptyComments && comments}
       </div>
 
       {/* comment form */}
@@ -98,7 +100,7 @@ const PostComments = ({ postId }: Props) => {
         <div className="flex flex-grow items-center max-sm:mb-3">
           <img
             className="w-10 h-10 rounded-full"
-            src={user.picture}
+            src={user?.picture || undefined}
             alt="avatar"
           />
           <input

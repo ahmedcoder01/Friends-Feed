@@ -5,7 +5,7 @@ interface ButtonProps {
   full?: boolean;
   className?: string;
   loading?: boolean;
-  style?: "primary" | "secondary" | "success" | "error" | "warning";
+  style?: "primary" | "secondary" | "success" | "error" | "warning" | "ghost";
   [key: string]: any;
 }
 

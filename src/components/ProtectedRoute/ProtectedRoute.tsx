@@ -22,6 +22,8 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps): JSX.Element => {
   if (!authLoading && !hasValidToken) {
     return <Navigate to="/login" state={false} />;
   }
+
+  return <></>;
 };
 
 export default ProtectedRoute;

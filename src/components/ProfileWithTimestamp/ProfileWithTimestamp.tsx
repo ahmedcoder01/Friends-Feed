@@ -15,7 +15,7 @@ const ProfileWithTimestamp: FC<Props> = ({ user, timestamp }) => {
         <div className="flex items-center">
           <img
             className="w-10 h-10 rounded-full"
-            src={user?.picture}
+            src={user?.picture || undefined}
             alt="avatar"
           />
           <div className="ml-3">

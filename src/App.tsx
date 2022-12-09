@@ -21,7 +21,6 @@ import Sidebar from "./components/Sidebar/Sidebar";
 function App() {
   const dispatch = useAppDispatch();
   const { hasValidToken } = useSelector(getAuth);
-  const { sidebarOpen } = useSelector(getUI);
   const navigateToHome = <Navigate to={PATHS.home.root} replace={true} />;
 
   useEffect(() => {
@@ -29,7 +28,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <>
+    <div className="">
       <Routes>
         {/* Auth */}
         <Route
@@ -76,9 +75,7 @@ function App() {
 
       {createPortal(<ToastContainer />, document.getElementById("toast")!)}
       {/* portal for sidebar */}
-      {sidebarOpen &&
-        createPortal(<Sidebar />, document.getElementById("modals")!)}
-    </>
+    </div>
   );
 }
 

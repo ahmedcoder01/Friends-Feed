@@ -3,7 +3,7 @@ import React from "react";
 
 const Loader = (): JSX.Element => {
   return (
-    <div className="h-screen w-screen flex items-center justify-center">
+    <div className="h-screen w-screen flex items-center justify-center fixed top-0 left-0 z-50">
       <Player
         autoplay
         loop

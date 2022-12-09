@@ -7,7 +7,7 @@ interface DefaultRootState {
 }
 
 const initialState: DefaultRootState = {
-  sidebarOpen: isMobileOrTablet() ? false : true,
+  sidebarOpen: false,
 };
 
 const uiSlice = createSlice({
@@ -15,6 +15,7 @@ const uiSlice = createSlice({
   initialState,
   reducers: {
     toggleSidebar: (state) => {
+      console.log("toggleSidebar");
       state.sidebarOpen = !state.sidebarOpen;
     },
   },
