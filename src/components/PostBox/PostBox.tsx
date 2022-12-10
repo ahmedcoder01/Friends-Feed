@@ -1,41 +1,58 @@
-import React, { FC, FormEvent, useRef } from "react";
+import React, { FC, FormEvent, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { getAuth } from "../../store/slices/authSlice";
 import Button from "../UI/Button/Button";
 import useToast from "../../hooks/useToast";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { PostReq } from "../../types";
+import { createPostReq } from "../../client";
 
 interface InputBoxProps {
-  onSubmit: (e: FormEvent, text: string) => void;
-  isLoading: boolean;
-  isError: boolean;
-  isValidationError: boolean;
-  onChange: () => void;
-  className?: string;
+  wrapperStyles?: string;
+  onSuccess?: () => void;
 }
 
-const InputBox: FC<InputBoxProps> = ({
-  onSubmit,
-  onChange,
-  isLoading,
-  isError,
-  isValidationError,
-}) => {
+const PostBox: FC<InputBoxProps> = ({ wrapperStyles, onSuccess }) => {
   //TODO: make this component reusable
   const { user } = useSelector(getAuth);
+  const [isValidationError, setIsValidationError] = useState<boolean>(false);
 
   const textRef = useRef<HTMLTextAreaElement>(null);
+
+  const {
+    mutateAsync: createPostAsync,
+    isLoading,
+    isError,
+  } = useMutation({
+    mutationKey: ["createPost"],
+    mutationFn: (data: PostReq) => {
+      return createPostReq(data);
+    },
+  });
+
+  async function handleCreatePost(e: FormEvent, text: string) {
+    e.preventDefault();
+
+    const isEmpty = text.trim().length === 0;
+    if (isEmpty) {
+      setIsValidationError(true);
+      return;
+    }
+    await createPostAsync({ text });
+    onSuccess && onSuccess();
+  }
 
   return (
     <form
       onSubmit={(e: FormEvent<HTMLFormElement>) => {
         if (!textRef.current) return;
-        onSubmit(e, textRef.current?.value);
+        handleCreatePost(e, textRef.current.value);
+
         //TODO: imporve UX here so that the field doesn't get cleared if error occurs
         textRef.current.value = "";
       }}
       aria-label="Create a post"
-      className="mt-10 bg-base-300 rounded-xl p-5 flex flex-col gap-4"
+      className={`mt-10 bg-base-300 rounded-xl p-5 flex flex-col gap-4 ${wrapperStyles}`}
     >
       <div className="flex">
         <img
@@ -45,7 +62,6 @@ const InputBox: FC<InputBoxProps> = ({
         />
 
         <textarea
-          onChange={onChange}
           className={`textarea w-full ${
             isValidationError || isError ? "border-error" : ""
           }`}
@@ -63,4 +79,4 @@ const InputBox: FC<InputBoxProps> = ({
   );
 };
 
-export default InputBox;
+export default PostBox;

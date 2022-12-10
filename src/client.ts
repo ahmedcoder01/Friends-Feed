@@ -18,6 +18,14 @@ export const getProfileById = async (userId: number) => {
   return req.data;
 };
 
+export const getProfilePosts = async (userId: number) => {
+  const req = await globalInstance({
+    method: "GET",
+    url: `/users/${userId}/posts`,
+  });
+  return req.data;
+};
+
 // FRIENDS
 
 export const addFriend = (userId: number) => {

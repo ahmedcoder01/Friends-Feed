@@ -10,6 +10,9 @@ interface ProfileHeaderProps {
   user: AnotherUser;
 }
 
+const defaultAvatar =
+  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
+
 const ProfileHeader: FC<ProfileHeaderProps> = ({ user: profileUser }) => {
   //TODO: handle friend requests in another component
   const [friendRequestSent, setFriendRequestSent] = useState<boolean>(false);
@@ -53,52 +56,48 @@ const ProfileHeader: FC<ProfileHeaderProps> = ({ user: profileUser }) => {
   }
 
   return (
-    <>
+    <Container>
       {/* user header */}
-      <div className=" bg-zinc-900 h-72">
+      <div className=" bg-zinc-900 sm:h-72 max-sm:h-40 rounded-b-3xl">
         {profileUser?.cover_photo && (
           <img src={profileUser.cover_photo} alt="cover photo" />
         )}
       </div>
-      <Container>
-        <div className=" flex max-sm:justify-center sm:justify-between">
-          {/* user profile image and name */}
-          <div className="flex items-center  max-sm:flex-col">
-            <div className="rounded-full relative bottom-20 h-24">
-              <img
-                src={profileUser?.picture || undefined}
-                alt="profile"
-                className="rounded-full h-44 w-44 bg-zinc-900 border whitespace-nowrap overflow-hidden"
-                style={{ textIndent: "100%" }}
-              />
-            </div>
-
-            <div>
-              <h2 className="sm:ml-6 max-sm:mt-2  text-2xl sm:text-3xl ">
-                {profileUser?.name}
-              </h2>
-              <p className="sm:ml-6 text-gray-400 text-sm">
-                {profileUser?.bio}
-              </p>
-            </div>
+      <div className=" px-10 flex max-sm:justify-center sm:justify-between max-sm:flex-col gap-3">
+        {/* user profile image and name */}
+        <div className="flex items-center  max-sm:flex-col">
+          <div className="rounded-full relative bottom-20 h-24">
+            <img
+              src={profileUser?.picture || defaultAvatar}
+              alt="profile"
+              className="rounded-full max-sm:h-40 max-sm:w-40 sm:w-44 sm:h-44 bg-zinc-900 border whitespace-nowrap overflow-hidden"
+              style={{ textIndent: "100%" }}
+            />
           </div>
 
-          {/* user actions */}
-          {!isSameUser && profileUser && (
-            <div className="flex items-center max-sm:flex-col">
-              <button
-                className={`btn btn-primary max-sm:mt-2 ${
-                  sendFriendReqMutation.isLoading && "loading"
-                }`}
-                onClick={addFriendHandler}
-              >
-                Add Friend
-              </button>
-            </div>
-          )}
+          <div>
+            <h2 className="sm:ml-6 max-sm:mt-2  text-2xl sm:text-3xl ">
+              {profileUser?.name}
+            </h2>
+            <p className="sm:ml-6 text-gray-400 text-sm">{profileUser?.bio}</p>
+          </div>
         </div>
-      </Container>
-    </>
+
+        {/*  USER ACTIONS */}
+        {!isSameUser && profileUser && (
+          <div className="flex items-center max-sm:flex-col">
+            <button
+              className={`btn btn-primary max-sm:mt-2 ${
+                sendFriendReqMutation.isLoading && "loading"
+              }`}
+              onClick={addFriendHandler}
+            >
+              Add Friend
+            </button>
+          </div>
+        )}
+      </div>
+    </Container>
   );
 };
 

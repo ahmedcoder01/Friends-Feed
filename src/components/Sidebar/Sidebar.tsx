@@ -10,11 +10,13 @@ import { AiTwotoneBell, AiOutlineBell } from "react-icons/ai";
 import { FaRegUser, FaUserAlt } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { useAppDispatch } from "../../store/hooks";
+import { getAuth } from "../../store/slices/authSlice";
 
 type Props = {};
 
 const Sidebar = (props: Props): JSX.Element => {
   const { sidebarOpen } = useSelector(getUI);
+  const { user } = useSelector(getAuth);
   const dispatch = useAppDispatch();
 
   const listItems = [
@@ -46,7 +48,7 @@ const Sidebar = (props: Props): JSX.Element => {
       name: "Profile",
       Icon: FaRegUser,
       IconActive: FaUserAlt,
-      path: "/profile",
+      path: `/profile/${user?.id}`,
     },
   ];
 

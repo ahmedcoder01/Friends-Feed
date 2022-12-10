@@ -9,7 +9,7 @@ export default {
     root: "/signup",
   },
   profile: {
-    root: "/profile:id",
+    root: "/profile/:userId/*",
   },
   search: {
     root: "/search",

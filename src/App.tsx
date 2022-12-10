@@ -57,7 +57,7 @@ function App() {
           }
         />
         <Route
-          path="/profile/:userId"
+          path={PATHS.profile.root}
           element={
             <ProtectedRoute>
               <Profile />

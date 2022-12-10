@@ -13,6 +13,9 @@ interface Props {
   timestamp: string;
 }
 
+const defaultAvatar =
+  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
+
 const ProfileWithTimestamp: FC<Props> = ({ user, timestamp }) => {
   return (
     <div className="">
@@ -20,11 +23,11 @@ const ProfileWithTimestamp: FC<Props> = ({ user, timestamp }) => {
         <div className="flex items-center">
           <img
             className="w-10 h-10 rounded-full"
-            src={user?.picture || undefined}
+            src={user?.picture || defaultAvatar}
             alt="avatar"
           />
           <div className="ml-3">
-            <p className="font-bold text-primary">
+            <p className="font-bold text-white">
               {<Link to={`/profile/${user.id}`}>{user.name}</Link>}
             </p>
             <p className="text-sm text-gray-400">

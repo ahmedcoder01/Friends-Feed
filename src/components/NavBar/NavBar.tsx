@@ -34,7 +34,12 @@ const NavBar: FC = () => {
         </button>
       </div>
       <div className="navbar-center">
-        <a className="btn btn-ghost normal-case text-xl">Friends Feed</a>
+        <Link
+          to={PATHS.home.root}
+          className="btn btn-ghost normal-case text-xl"
+        >
+          Friends Feed
+        </Link>
       </div>
       <div className="navbar-end">
         <SearchButton />

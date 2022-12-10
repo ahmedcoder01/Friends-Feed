@@ -3,8 +3,8 @@
     "id": 10,
     "text": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa deleniti similique, iure deserunt dolor rerum at earum dolorem omnis dolorum adipisci tempora consequatur odit eius qui modi, nemo quisquam ratione. Est dolorem obcaecati, error quae exercitationem quidem similique. Dolor, impedit assumenda asperiores accusamus dolore harum id iusto unde rerum voluptatibus, sit eligendi cupiditate commodi explicabo accusantium, ad delectus sequi quaerat! Quidem non harum fuga unde tempore, quas praesentium molestias dolor ad maxime possimus ",
     "user": {
-      "id": 10,
-      "name": "Jane Doe",
+      "id": 1,
+      "name": "Domy Dev",
       "picture": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
     },
     "createdAt": "2022-01-01T12:00:00Z",
@@ -17,7 +17,7 @@
     "text": "Hello World",
     "user": {
       "id": 1,
-      "name": "Jane Doe",
+      "name": "Domy Dev",
       "picture": "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png"
     },
     "createdAt": "2020-05-01T12:00:00Z",
