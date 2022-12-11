@@ -51,7 +51,7 @@ const PostCommentItem = ({ comment, postId, refetchComments }: Props) => {
   }
 
   let commentUI = (
-    <li className="flex items-center w-full justify-between transition hover:bg-base-100 p-3 rounded-md ">
+    <li className="flex items-center w-full justify-between transition hover:bg-base-100 p-1 py-2 rounded-md ">
       <div className="flex items-center">
         <img
           className="w-10 h-10 rounded-full"
@@ -84,29 +84,36 @@ const PostCommentItem = ({ comment, postId, refetchComments }: Props) => {
 
   let editUI = (
     <li className="flex items-center w-full">
-      <form onSubmit={editCommentHandler} className="w-full flex">
-        <img
-          className="w-6 h-6 rounded-full mr-2 "
-          src={comment.user.picture || defaultAvatar}
-          alt="avatar"
-        />
+      <form
+        onSubmit={editCommentHandler}
+        className="w-full flex max-sm:flex-col"
+      >
+        <div className="flex flex-grow">
+          <img
+            className="w-6 h-6 rounded-full mr-2 "
+            src={comment.user.picture || defaultAvatar}
+            alt="avatar"
+          />
 
-        <input
-          ref={commentInputRef}
-          type="text"
-          defaultValue={comment.text}
-          className="flex-grow rounded-sm px-2"
-        />
-        <button type="submit" className="text-sm">
-          Save
-        </button>
-        <button
-          type="button"
-          className="text-sm"
-          onClick={() => setIsEditing(false)}
-        >
-          Cancel
-        </button>
+          <input
+            ref={commentInputRef}
+            type="text"
+            defaultValue={comment.text}
+            className="flex-grow rounded-sm px-2 min-h-12"
+          />
+        </div>
+        <div className="flex max-sm:w-full justify-end max-sm:mt-2">
+          <button type="submit" className="text-sm">
+            Save
+          </button>
+          <button
+            type="button"
+            className="text-sm"
+            onClick={() => setIsEditing(false)}
+          >
+            Cancel
+          </button>
+        </div>
       </form>
     </li>
   );
