@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import SearchButton from "../Search/SearchButton";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -12,15 +12,17 @@ import { getUI } from "../../store/slices/uiSlice";
 import uiActions from "../../store/slices/uiSlice";
 import { HiOutlineUsers } from "react-icons/hi";
 import NavItem from "./NavItem";
-import FriendRequestsDropdown from "./Dropdowns/FriendRequestsDropdown";
+import NavMenu from "./NavItemMenu";
+import NavItemMenu from "./NavItemMenu";
+import FriendRequestsMenu from "./Menus/FriendRequestsMenu";
+import { IoNotificationsOutline } from "react-icons/io5";
+import NotificationsMenu from "./Menus/NotificationsMenu";
+import appActions, { getAppSlice } from "../../store/slices/appSlice";
 
 const NavBar: FC = () => {
   const dispatch = useAppDispatch();
   const { user } = useSelector(getAuth);
-
-  function handleLogout() {
-    dispatch(logout());
-  }
+  const { hasUnreadNotifications } = useSelector(getAppSlice);
 
   return (
     <nav className="navbar bg-base-100">
@@ -45,9 +47,27 @@ const NavBar: FC = () => {
       </div>
       <ul className="navbar-end">
         <SearchButton />
+
         {/* notifications */}
-        <NavItem icon={<HiOutlineUsers size="18px" />} title="Friend Requests">
-          <FriendRequestsDropdown />
+        <NavItem Icon={IoNotificationsOutline} hasMenu={true}>
+          <NavItemMenu title="Notifications">
+            <NotificationsMenu />
+          </NavItemMenu>
+        </NavItem>
+        {/* user menu */}
+
+        {/* friend requests */}
+        <NavItem
+          Icon={HiOutlineUsers}
+          hasMenu={true}
+          indicator={hasUnreadNotifications}
+          onClick={() => {
+            dispatch(appActions.haveRead());
+          }}
+        >
+          <NavItemMenu title="Friends Requests">
+            <FriendRequestsMenu />
+          </NavItemMenu>
         </NavItem>
       </ul>
     </nav>

@@ -1,4 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { appReducer } from "./slices/appSlice";
 import { authReducer } from "./slices/authSlice";
 import { uiReducer } from "./slices/uiSlice";
 
@@ -6,6 +7,7 @@ let store = configureStore({
   reducer: {
     auth: authReducer,
     ui: uiReducer,
+    app: appReducer,
   },
 
   // disable middleware

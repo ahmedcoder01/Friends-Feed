@@ -9,13 +9,11 @@ import { Comment, Post } from "../../types";
 import { string } from "yup";
 import { getRelativeTime } from "../../utils/helpers";
 import { Link } from "react-router-dom";
+import PostCommentItem from "./PostCommentItem";
 
 interface Props {
   postId: number;
 }
-
-const defaultAvatar =
-  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
 
 const PostComments = ({ postId }: Props) => {
   const commentInputRef = useRef<HTMLInputElement>(null);
@@ -73,29 +71,11 @@ const PostComments = ({ postId }: Props) => {
       {commentsObj &&
         Children.toArray(
           commentsObj.comments.map((comment: Comment) => (
-            <li className="flex items-center w-full">
-              <div className="flex items-center">
-                <img
-                  className="w-10 h-10 rounded-full"
-                  src={comment.user.picture || defaultAvatar}
-                  alt="avatar"
-                />
-                <div className="ml-4 flex flex-col">
-                  <div className=" flex items-center gap-3">
-                    <Link to={`/profile/${comment.user.id}`}>
-                      {comment.user.name}
-                    </Link>
-                    <p className="text-xs text-gray-400">
-                      {getRelativeTime(comment.createdAt)}
-                    </p>
-                  </div>
-
-                  <p className="text-sm text-left text-gray-400">
-                    {comment.text}
-                  </p>
-                </div>
-              </div>
-            </li>
+            <PostCommentItem
+              comment={comment}
+              postId={postId}
+              refetchComments={commentsRefetch}
+            />
           ))
         )}
     </ul>

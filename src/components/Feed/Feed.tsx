@@ -12,9 +12,11 @@ const Feed: FC = () => {
 
   // FEED POSTS
   const {
+    //! UNDER MAINTENANCE
     data: feed,
     isLoading: isFeedLoading,
     isError: isFeedError,
+    error: feedError,
   } = useQuery({
     queryKey: ["feed"],
     queryFn: getFeed,
@@ -25,7 +27,7 @@ const Feed: FC = () => {
 
   return (
     <div className="flex items-center flex-grow justify-center">
-      <div className="max-w-2xl">
+      <div className="max-w-2xl w-full">
         <Container>
           <PostBox />
           <div className="flex flex-col items-center mt-20 ">

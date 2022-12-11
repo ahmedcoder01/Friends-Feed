@@ -5,6 +5,7 @@ import Container from "../UI/Container/Container";
 import { useMutation } from "@tanstack/react-query";
 import { VisitedUser } from "../../types";
 import { addFriend, updateProfileImg } from "../../client";
+import FriendshipStatusBtn from "../FriendshipStatusBtn/FriendshipStatusBtn";
 
 interface ProfileHeaderProps {
   user: VisitedUser;
@@ -75,7 +76,7 @@ const ProfileHeader: FC<ProfileHeaderProps> = ({ user: profileUser }) => {
             />
           </div>
 
-          <div>
+          <div className="text-center">
             <h2 className="sm:ml-6 max-sm:mt-2  text-2xl sm:text-3xl ">
               {profileUser?.name}
             </h2>
@@ -84,16 +85,12 @@ const ProfileHeader: FC<ProfileHeaderProps> = ({ user: profileUser }) => {
         </div>
 
         {/*  USER ACTIONS */}
-        {!isSameUser && profileUser && (
+        {!isSameUser && profileUser?.friendshipStatus && (
           <div className="flex items-center max-sm:flex-col">
-            <button
-              className={`btn btn-primary max-sm:mt-2 ${
-                sendFriendReqMutation.isLoading && "loading"
-              }`}
-              onClick={addFriendHandler}
-            >
-              Add Friend
-            </button>
+            <FriendshipStatusBtn
+              currentStatus={profileUser.friendshipStatus}
+              userId={profileUser.id}
+            />
           </div>
         )}
       </div>

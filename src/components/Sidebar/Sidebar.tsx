@@ -10,7 +10,9 @@ import { AiTwotoneBell, AiOutlineBell } from "react-icons/ai";
 import { FaRegUser, FaUserAlt } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { useAppDispatch } from "../../store/hooks";
-import { getAuth } from "../../store/slices/authSlice";
+import authActions, { getAuth } from "../../store/slices/authSlice";
+import { BiLogOut } from "react-icons/bi";
+import { FiLogOut } from "react-icons/fi";
 
 type Props = {};
 
@@ -52,6 +54,8 @@ const Sidebar = (props: Props): JSX.Element => {
     },
   ];
 
+  // close sidebar on nav item click
+
   return (
     <aside
       className={`md:w-72 max-md:w-24 h-screen relative ${
@@ -78,6 +82,7 @@ const Sidebar = (props: Props): JSX.Element => {
                 className={(isActive) =>
                   isActive ? "text-blue-500" : "text-gray-500"
                 }
+                onClick={() => dispatch(uiActions.toggleSidebar())}
               >
                 {({ isActive }) => {
                   return isActive ? (
@@ -99,6 +104,18 @@ const Sidebar = (props: Props): JSX.Element => {
               </NavLink>
             </li>
           ))}
+          {/* logout */}
+          <li>
+            <button
+              className="flex items-center gap-4 btn btn-ghost justify-start"
+              onClick={() => dispatch(authActions.logout())}
+            >
+              <FiLogOut size="26px" />
+              <span className="text-gray-500 sm:max-md:hidden text-xl capitalize">
+                Logout
+              </span>
+            </button>
+          </li>
         </ul>
       </div>
     </aside>

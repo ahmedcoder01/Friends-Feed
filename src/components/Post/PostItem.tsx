@@ -20,7 +20,7 @@ const PostItem = ({ data }: Props): JSX.Element => {
   const postOwner = user?.id === postedUser.id;
 
   return (
-    <div className="card shadow-x w-full bg-base-300 mb-12">
+    <div className="card rounded-lg shadow-x w-full bg-base-300 mb-12">
       {/* user & post details */}
       <div className="flex justify-between p-6 pb-0">
         <ProfileWithTimestamp timestamp={createdAt} user={postedUser} />

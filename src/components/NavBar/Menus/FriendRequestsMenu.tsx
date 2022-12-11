@@ -14,7 +14,7 @@ type Props = {};
 const defaultAvatar =
   "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";
 
-const FriendRequestsDropdown = (props: Props) => {
+const FriendRequestsMenu = (props: Props) => {
   const notify = useToast();
 
   const {
@@ -71,7 +71,7 @@ const FriendRequestsDropdown = (props: Props) => {
   }
 
   return (
-    <>
+    <div className=" text-center">
       {isLoading && <div>Loading...</div>}
       {isError && <div>Something went wrong</div>}
       {!isLoading && !friendRequestsRes?.requests?.length && (
@@ -88,22 +88,21 @@ const FriendRequestsDropdown = (props: Props) => {
               />
 
               <div className="ml-4 flex  gap-3 ">
+                {/* accept button */}
                 <button
-                  className={`btn btn-ghost ${
-                    acceptanceReqLoading ? "loading" : ""
-                  }`}
+                  className={`btn btn-ghost`}
                   onClick={() => {
                     acceptFriendRequestHandler(friendRequest.sender.id);
                   }}
+                  disabled={acceptanceReqLoading}
                 >
                   Accept
                 </button>
+                {/* decline button */}
                 <button
-                  className={`btn btn-ghost ${
-                    rejectionReqLoading ? "loading" : ""
-                  }`}
+                  className={`btn btn-ghost`}
+                  disabled={rejectionReqLoading}
                   onClick={() => {
-                    console.log("decline");
                     rejectFriendRequestHandler(friendRequest.sender.id);
                   }}
                 >
@@ -114,8 +113,8 @@ const FriendRequestsDropdown = (props: Props) => {
           </li>
         ))}
       </ul>
-    </>
+    </div>
   );
 };
 
-export default FriendRequestsDropdown;
+export default FriendRequestsMenu;

@@ -1,30 +1,50 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { IconBaseProps } from "react-icons/lib";
 
 type Props = {
-  icon: React.ReactNode;
-  children: React.ReactNode;
-  title: string;
+  Icon: React.ComponentType<IconBaseProps>;
+  children?: React.ReactNode;
+  hasMenu?: boolean;
+  indicator?: boolean;
+  onClick?: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
-const NavItem = ({ icon, children, title }: Props) => {
+const NavItem = ({ Icon, children, hasMenu, indicator, onClick }: Props) => {
   const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLLIElement>(null);
+
+  // close the menu when clicking outside of it
+  useEffect(() => {
+    if (!open) return;
+    function handleClickOutside(event: MouseEvent) {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setOpen(false);
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside, true);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside, true);
+    };
+  }, [open]);
 
   return (
-    <li className=" sm:relative">
+    <li className=" sm:relative" ref={ref}>
       <button
         className="btn btn-ghost"
-        onClick={() => {
-          setOpen(!open);
+        onClick={(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+          hasMenu && setOpen((prev) => !prev);
+          onClick && onClick(e);
         }}
       >
-        {icon}
-      </button>
-      {open && (
-        <div className="absolute top-16 right-0 bg-base-300 sm:w-96 z-50 rounded-lg shadow-lg px-4 py-5 max-sm:w-full">
-          <h3 className="mb-7 font-semibold text-lg">{title}</h3>
-          {children}
+        <div className="indicator">
+          {indicator && (
+            <span className="indicator-item badge badge-secondary bg-primary"></span>
+          )}
+          <Icon size="20px" />
         </div>
-      )}
+      </button>
+      {open && children}
     </li>
   );
 };

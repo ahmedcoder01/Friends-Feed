@@ -122,6 +122,20 @@ export const createComment = async (
   return req.data;
 };
 
+// edit comment
+export const editComment = async (
+  postId: number,
+  commentId: number,
+  comment: CommentReq
+): Promise<CreateCommentRes> => {
+  const req = await globalInstance({
+    method: "PATCH",
+    url: `/posts/${postId}/comments/${commentId}`,
+    data: comment,
+  });
+  return req.data;
+};
+
 export const getFriendRequests = async (): Promise<FriendRequestsRes> => {
   const req = await globalInstance({
     method: "GET",

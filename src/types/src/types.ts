@@ -10,12 +10,7 @@ export interface User {
 export interface VisitedUser extends User {
   // optional because there is a possibility that the
   // same user will be lookedup which will not have a friendshipStatus
-  friendshipStatus?:
-    | "NOT_FRIENDS"
-    | "FRIENDS"
-    | "PENDING_SENT_BY_YOU"
-    | "PENDING_SENT_BY_USER"
-    | "REJECTED_BY_USER";
+  friendshipStatus?: FriendshipStatus;
 }
 
 export interface MiniUser {
@@ -24,6 +19,13 @@ export interface MiniUser {
   name: string;
   picture: string | null;
 }
+
+export type FriendshipStatus =
+  | "NOT_FRIENDS"
+  | "FRIENDS"
+  | "PENDING_SENT_BY_YOU"
+  | "PENDING_SENT_BY_USER"
+  | "REJECTED_BY_USER";
 
 // POST RELATED
 export interface Post {
@@ -47,7 +49,7 @@ export interface Comment {
   text: string;
   createdAt: string;
   postId: number;
-  user: User | VisitedUser;
+  user: User | VisitedUser | MiniUser;
 }
 
 export interface Like {

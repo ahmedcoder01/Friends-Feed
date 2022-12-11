@@ -4,7 +4,7 @@ import { getNotifications } from "../../../client";
 
 type Props = {};
 
-const NotificationDropdown = (props: Props) => {
+const NotificationsMenu = (props: Props) => {
   const {
     data: notificationsRes,
     isLoading,
@@ -18,13 +18,12 @@ const NotificationDropdown = (props: Props) => {
   });
 
   return (
-    <div className="absolute top-0 right-0 w-80 bg-white rounded-lg shadow-lg">
-      <div className="flex flex-col items-center justify-center h-20">
-        <h3 className="text-2xl font-bold">Notifications</h3>
-      </div>
-
+    <div className="text-center">
       {isLoading && <p>Loading...</p>}
       {isError && <p>Something went wrong</p>}
+      {!isLoading && !isError && !notificationsRes?.notifications.length && (
+        <p>No notifications</p>
+      )}
 
       <ul>
         {notificationsRes?.notifications.map((notitification) => {
@@ -39,4 +38,4 @@ const NotificationDropdown = (props: Props) => {
   );
 };
 
-export default NotificationDropdown;
+export default NotificationsMenu;

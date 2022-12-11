@@ -32,6 +32,8 @@ const Profile = (): JSX.Element => {
     queryKey: ["userProfile", profileUserId],
     queryFn: ({ queryKey }) => getProfileById(Number(queryKey[1])),
     staleTime: Infinity,
+    // dont refetch
+    refetchOnWindowFocus: false,
   });
 
   if (profileLoading) {

@@ -52,7 +52,7 @@ const PostBox: FC<InputBoxProps> = ({ wrapperStyles, onSuccess }) => {
         textRef.current.value = "";
       }}
       aria-label="Create a post"
-      className={`mt-10 bg-base-300 rounded-xl p-5 flex flex-col gap-4 ${wrapperStyles}`}
+      className={`mt-10 bg-base-300 rounded-lg p-5 flex flex-col gap-4 ${wrapperStyles}`}
     >
       <div className="flex">
         <img
