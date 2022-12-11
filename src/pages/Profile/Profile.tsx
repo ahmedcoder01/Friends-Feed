@@ -40,11 +40,12 @@ const Profile = (): JSX.Element => {
 
   if (profileError) {
     notify("Profile not found", "error");
+    return <Navigate to="/" />;
   }
 
   const overview = (
     <>
-      <ProfileBody user={profileResponse} />
+      <ProfileBody profileUser={profileResponse} />
     </>
   );
 

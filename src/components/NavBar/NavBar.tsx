@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import SearchButton from "../Search/SearchButton";
-import NotificationsButton from "../Notifications/NotificationsButton";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { logout } from "../../store/thunks";
@@ -11,6 +10,9 @@ import Sidebar from "../Sidebar/Sidebar";
 import { AiOutlineMenu } from "react-icons/ai";
 import { getUI } from "../../store/slices/uiSlice";
 import uiActions from "../../store/slices/uiSlice";
+import { HiOutlineUsers } from "react-icons/hi";
+import NavItem from "./NavItem";
+import FriendRequestsDropdown from "./Dropdowns/FriendRequestsDropdown";
 
 const NavBar: FC = () => {
   const dispatch = useAppDispatch();
@@ -41,11 +43,13 @@ const NavBar: FC = () => {
           Friends Feed
         </Link>
       </div>
-      <div className="navbar-end">
+      <ul className="navbar-end">
         <SearchButton />
         {/* notifications */}
-        <NotificationsButton />
-      </div>
+        <NavItem icon={<HiOutlineUsers size="18px" />} title="Friend Requests">
+          <FriendRequestsDropdown />
+        </NavItem>
+      </ul>
     </nav>
   );
 };

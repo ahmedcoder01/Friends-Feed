@@ -105,10 +105,12 @@ const PostComments = ({ postId }: Props) => {
     <div className="mt-5 w-full text-center">
       {/* comments */}
       <div className="mb-5">
-        {commentsLoading && <p>Loading...</p>}
-        {commentsError && <p>Something went wrong</p>}
-        {hasEmptyComments && emptyCommentsMsg}
-        {!hasEmptyComments && comments}
+        <>
+          {commentsLoading && <p>Loading...</p>}
+          {commentsError && <p>Something went wrong</p>}
+          {hasEmptyComments && emptyCommentsMsg}
+          {!hasEmptyComments && comments}
+        </>
       </div>
 
       {/* comment form */}

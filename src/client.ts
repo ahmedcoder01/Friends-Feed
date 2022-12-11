@@ -1,4 +1,13 @@
-import { PostReq } from "./types/src/api";
+import {
+  CreateCommentRes,
+  CreatePostRes,
+  FriendRequestsRes,
+  NotificationsRes,
+  PostCommentsLookupRes,
+  PostReq,
+  ProfileLookupRes,
+  UserPostsLookupRes,
+} from "./types/src/api";
 import { globalInstance } from "./axios/axiosInstances";
 import { Comment, CommentReq, Like, Post } from "./types";
 
@@ -10,7 +19,9 @@ export const updateProfileImg = (imageFile: File) => {
 
 // LOOKUP
 
-export const getProfileById = async (userId: number) => {
+export const getProfileById = async (
+  userId: number
+): Promise<ProfileLookupRes> => {
   const req = await globalInstance({
     method: "GET",
     url: `/users/${userId}`,
@@ -18,7 +29,9 @@ export const getProfileById = async (userId: number) => {
   return req.data;
 };
 
-export const getProfilePosts = async (userId: number) => {
+export const getProfilePosts = async (
+  userId: number
+): Promise<UserPostsLookupRes> => {
   const req = await globalInstance({
     method: "GET",
     url: `/users/${userId}/posts`,
@@ -28,13 +41,13 @@ export const getProfilePosts = async (userId: number) => {
 
 // FRIENDS
 
-export const addFriend = (userId: number) => {
+export const addFriend = (userId: number): Promise<void> => {
   return globalInstance.post(`/users/${userId}/friends/add`);
 };
 
 // NOTIFICATIONS
 
-export const getNotifications = async () => {
+export const getNotifications = async (): Promise<NotificationsRes> => {
   const req = await globalInstance({
     method: "GET",
     url: `/notifications`,
@@ -44,7 +57,7 @@ export const getNotifications = async () => {
 
 // POSTS
 
-export const createPostReq = async (post: PostReq) => {
+export const createPostReq = async (post: PostReq): Promise<CreatePostRes> => {
   const req = await globalInstance({
     method: "POST",
     url: `/posts`,
@@ -53,7 +66,7 @@ export const createPostReq = async (post: PostReq) => {
   return req.data;
 };
 
-export const deletePost = async (postId: number) => {
+export const deletePost = async (postId: number): Promise<void> => {
   const req = await globalInstance({
     method: "DELETE",
     url: `/posts/${postId}`,
@@ -62,6 +75,7 @@ export const deletePost = async (postId: number) => {
 };
 
 export const getFeed = async () => {
+  // TODO: create feed type
   const req = await globalInstance({
     method: "GET",
     //! change to feed when microservice is ready
@@ -70,7 +84,7 @@ export const getFeed = async () => {
   return req.data;
 };
 
-export const likePost = async (postId: number) => {
+export const likePost = async (postId: number): Promise<void> => {
   const req = await globalInstance({
     method: "POST",
     url: `/posts/${postId}/like`,
@@ -78,10 +92,7 @@ export const likePost = async (postId: number) => {
   return req.data;
 };
 
-export const unlikePost = async (
-  postId: Pick<Post, "id">,
-  likeId: Pick<Like, "id">
-) => {
+export const unlikePost = async (postId: number, likeId: number) => {
   const req = await globalInstance({
     method: "DELETE",
     url: `/api/v1.0/posts/${postId}/likes/${likeId}`,
@@ -89,7 +100,9 @@ export const unlikePost = async (
   return req.data;
 };
 
-export const getCommentsByPostId = async (postId: string) => {
+export const getCommentsByPostId = async (
+  postId: string
+): Promise<PostCommentsLookupRes> => {
   const req = await globalInstance({
     method: "GET",
     url: `/posts/${postId}/comments`,
@@ -97,11 +110,38 @@ export const getCommentsByPostId = async (postId: string) => {
   return req.data;
 };
 
-export const createComment = async (postId: number, comment: CommentReq) => {
+export const createComment = async (
+  postId: number,
+  comment: CommentReq
+): Promise<CreateCommentRes> => {
   const req = await globalInstance({
     method: "POST",
     url: `/posts/${postId}/comments`,
     data: comment,
+  });
+  return req.data;
+};
+
+export const getFriendRequests = async (): Promise<FriendRequestsRes> => {
+  const req = await globalInstance({
+    method: "GET",
+    url: `/friendships/requests`,
+  });
+  return req.data;
+};
+
+export const acceptFriendRequest = async (userId: number): Promise<void> => {
+  const req = await globalInstance({
+    method: "POST",
+    url: `users/${userId}/friendships/accept`,
+  });
+  return req.data;
+};
+
+export const rejectFriendRequest = async (userId: number): Promise<void> => {
+  const req = await globalInstance({
+    method: "POST",
+    url: `/friendships/${userId}/reject`,
   });
   return req.data;
 };

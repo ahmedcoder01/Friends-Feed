@@ -22,7 +22,7 @@ const PostItem = ({ data }: Props): JSX.Element => {
   return (
     <div className="card shadow-x w-full bg-base-300 mb-12">
       {/* user & post details */}
-      <div className="flex justify-between ">
+      <div className="flex justify-between p-6 pb-0">
         <ProfileWithTimestamp timestamp={createdAt} user={postedUser} />
         {postOwner && <PostOwnerActions postId={id} />}
       </div>

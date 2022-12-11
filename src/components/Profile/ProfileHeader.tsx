@@ -3,11 +3,11 @@ import { useSelector } from "react-redux";
 import { getAuth } from "../../store/slices/authSlice";
 import Container from "../UI/Container/Container";
 import { useMutation } from "@tanstack/react-query";
-import { AnotherUser } from "../../types";
+import { VisitedUser } from "../../types";
 import { addFriend, updateProfileImg } from "../../client";
 
 interface ProfileHeaderProps {
-  user: AnotherUser;
+  user: VisitedUser;
 }
 
 const defaultAvatar =

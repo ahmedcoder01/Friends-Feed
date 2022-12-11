@@ -1,8 +1,8 @@
 import React from "react";
-import { AnotherUser, User } from "../../../types";
+import { VisitedUser, User } from "../../../types";
 
 type Props = {
-  user: AnotherUser;
+  user: VisitedUser;
 };
 
 const ProfileFriends = (props: Props) => {
