@@ -10,7 +10,7 @@ import { AiTwotoneBell, AiOutlineBell } from "react-icons/ai";
 import { FaRegUser, FaUserAlt } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 import { useAppDispatch } from "../../store/hooks";
-import authActions, { getAuth } from "../../store/slices/authSlice";
+import authActions, { getAuth, logout } from "../../store/slices/authSlice";
 import { BiLogOut } from "react-icons/bi";
 import { FiLogOut } from "react-icons/fi";
 
@@ -108,7 +108,7 @@ const Sidebar = (props: Props): JSX.Element => {
           <li>
             <button
               className="flex items-center gap-4 btn btn-ghost justify-start"
-              onClick={() => dispatch(authActions.logout())}
+              onClick={() => dispatch(logout())}
             >
               <FiLogOut size="26px" />
               <span className="text-gray-500 sm:max-md:hidden text-xl capitalize">

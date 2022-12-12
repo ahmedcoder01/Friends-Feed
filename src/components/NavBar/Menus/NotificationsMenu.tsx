@@ -1,6 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { Children } from "react";
 import { getNotifications } from "../../../client";
+import { sortByCreatedAt } from "../../../utils/helpers";
+import NotificationMenuItem from "./NotificationMenuItem";
 
 type Props = {};
 
@@ -25,14 +27,14 @@ const NotificationsMenu = (props: Props) => {
         <p>No notifications</p>
       )}
 
-      <ul>
-        {notificationsRes?.notifications.map((notitification) => {
-          return (
-            <li key={notitification.id}>
-              <p>{notitification?.content}</p>
-            </li>
-          );
-        })}
+      <ul className="flex flex-col ">
+        {Children.toArray(
+          notificationsRes?.notifications
+            .sort(sortByCreatedAt)
+            .map((notitification) => {
+              return <NotificationMenuItem notification={notitification} />;
+            })
+        )}
       </ul>
     </div>
   );

@@ -87,22 +87,28 @@ const Signup = (): JSX.Element => {
     <section className="">
       <Container className="">
         <div className="flex items-center justify-center flex-col h-screen">
-          <Logo size="lg" className="" />
-          <p className="">Sign Up to connect</p>
+          <div className="mb-16 flex flex-col text-center items-center">
+            <Logo size="lg" />
+            <h1 className="my-2 text-3xl font-bold ">Friends Feed</h1>
+            <p>
+              Join Friends Feed. A social media platform where you can share
+              your thoughts
+            </p>
+          </div>
 
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={submitHandler}
           >
-            <Form className="sm:w-96">
+            <Form className="sm:w-96 max-sm:w-full">
               {formInputs.map((input) => (
                 <Input
                   key={input.name}
                   name={input.name}
                   label={input.label}
                   placeholder={input.placeholder}
-                  className="mb-3"
+                  className="mb-3  w-full"
                   full
                 />
               ))}

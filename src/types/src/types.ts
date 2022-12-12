@@ -42,6 +42,7 @@ export interface Post {
 
   likesCount: number;
   commentsCount: number;
+  likeId?: number;
 }
 
 export interface Comment {
@@ -59,4 +60,23 @@ export interface Like {
     name: number;
     picture: string | null;
   };
+}
+
+export interface Notification {
+  createdAt: string;
+  fromUser: MiniUser;
+  id: number;
+  postId?: number;
+  read: boolean;
+  type:
+    | "POST_LIKE"
+    | "POST_COMMENT"
+    | "FRIEND_REQUEST"
+    | "FRIEND_REQUEST_ACCEPTED";
+}
+
+export interface FriendRequest {
+  id: number;
+  createdAt: string;
+  sender: MiniUser;
 }

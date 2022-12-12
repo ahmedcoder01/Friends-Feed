@@ -14,8 +14,9 @@ import { createPortal } from "react-dom";
 import { ToastContainer } from "react-toastify";
 import { useAppDispatch } from "./store/hooks";
 import PATHS from "./routes";
-import "react-toastify/dist/ReactToastify.css";
 import { getUI } from "./store/slices/uiSlice";
+import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
 
 function App() {
   const dispatch = useAppDispatch();

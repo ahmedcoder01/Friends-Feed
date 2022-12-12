@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import React, { Children, FormEvent, useEffect, useRef } from "react";
+import React, { Children, FormEvent, useState, useRef } from "react";
 import { useSelector } from "react-redux";
 import { createComment, getCommentsByPostId } from "../../client";
 import { getAuth } from "../../store/slices/authSlice";
@@ -16,6 +16,7 @@ interface Props {
 }
 
 const PostComments = ({ postId }: Props) => {
+  const [limit, setLimit] = useState(3);
   const commentInputRef = useRef<HTMLInputElement>(null);
   const { user } = useSelector(getAuth);
   const notify = useToast();
@@ -70,13 +71,21 @@ const PostComments = ({ postId }: Props) => {
     <ul className="flex flex-col items-center gap-7">
       {commentsObj &&
         Children.toArray(
-          commentsObj.comments.map((comment: Comment) => (
-            <PostCommentItem
-              comment={comment}
-              postId={postId}
-              refetchComments={commentsRefetch}
-            />
-          ))
+          commentsObj.comments
+            .sort(
+              (a: Comment, b: Comment) =>
+                new Date(b.createdAt).getTime() -
+                new Date(a.createdAt).getTime()
+            )
+            .slice(0, limit)
+
+            .map((comment: Comment) => (
+              <PostCommentItem
+                comment={comment}
+                postId={postId}
+                refetchComments={commentsRefetch}
+              />
+            ))
         )}
     </ul>
   );
@@ -90,6 +99,15 @@ const PostComments = ({ postId }: Props) => {
           {commentsError && <p>Something went wrong</p>}
           {hasEmptyComments && emptyCommentsMsg}
           {!hasEmptyComments && comments}
+          {/* see more button */}
+          {commentsObj && commentsObj.comments.length > limit && (
+            <button
+              className="text-sm text-gray-500 mt-2 outline-none focus:outline-none hover:underline text-left"
+              onClick={() => setLimit((prev) => prev + 3)}
+            >
+              View more comments
+            </button>
+          )}
         </>
       </div>
 

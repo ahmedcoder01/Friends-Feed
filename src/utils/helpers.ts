@@ -27,3 +27,17 @@ export const isMobileOrTablet = (): boolean => {
     navigator.userAgent.indexOf("IEMobile") !== -1
   );
 };
+
+export const sortByCreatedAt = (
+  a: {
+    createdAt: string;
+  },
+  b: {
+    createdAt: string;
+  }
+) => {
+  return Number(new Date(b.createdAt)) - Number(new Date(a.createdAt));
+};
+
+export const defaultAvatar =
+  "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png";

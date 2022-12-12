@@ -87,7 +87,7 @@ export const getFeed = async () => {
 export const likePost = async (postId: number): Promise<void> => {
   const req = await globalInstance({
     method: "POST",
-    url: `/posts/${postId}/like`,
+    url: `/posts/${postId}/likes`,
   });
   return req.data;
 };

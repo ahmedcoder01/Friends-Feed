@@ -23,6 +23,7 @@ const Feed: FC = () => {
     retry: false,
     //TODO: refresh every 4 mins (staleTime)
     staleTime: Infinity,
+    refetchOnWindowFocus: false,
   });
 
   return (

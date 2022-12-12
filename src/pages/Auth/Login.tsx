@@ -59,27 +59,41 @@ const Login = (): JSX.Element => {
     <section>
       <Container>
         <div className="flex items-center justify-center flex-col h-screen">
-          <Logo size="lg" />
-          <p className="my-2">Login to manage your account</p>
+          <div className="mb-16 flex flex-col text-center items-center">
+            <Logo size="lg" />
+            <h1 className="my-2 text-3xl font-bold ">Friends Feed</h1>
+            <p>
+              Login to your account to see your friends posts and share your own
+            </p>
+          </div>
 
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={submitHandler}
           >
-            <Form className="sm:w-96">
+            <Form className="sm:w-96 max-sm:w-full">
               {formInputs.map((input) => (
                 <Input
                   key={input.name}
                   name={input.name}
                   label={input.label}
                   placeholder={input.placeholder}
-                  className="mb-3"
+                  className="mb-3 w-full"
                   full
                 />
               ))}
 
-              {authError && <p className="">{authError}</p>}
+              {authError && (
+                <p
+                  className="
+              text-red-500
+                text-sm
+              "
+                >
+                  {authError}
+                </p>
+              )}
 
               <Button
                 full

@@ -1,4 +1,4 @@
-import { Post, Comment, MiniUser } from "./types";
+import { Post, Comment, MiniUser, Notification, FriendRequest } from "./types";
 //* REQUESTS
 
 // AUTH
@@ -58,7 +58,7 @@ export interface PostCommentsLookupRes {
 
 export interface NotificationsRes {
   //! TODO: create notification type
-  notifications: Array<any>;
+  notifications: Notification[];
   count: number;
   limit: number;
   page: number;
@@ -83,13 +83,7 @@ export interface CreateCommentRes {
 }
 
 export interface FriendRequestsRes {
-  requests: [
-    {
-      id: number;
-      createdAt: string;
-      sender: MiniUser;
-    }
-  ];
+  requests: FriendRequest[];
   count: number;
   page: number;
   limit: number;

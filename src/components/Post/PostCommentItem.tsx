@@ -26,6 +26,10 @@ const PostCommentItem = ({ comment, postId, refetchComments }: Props) => {
 
   const isSameUser = comment.user.id === user?.id;
 
+  // animation logic
+  const wasJustAdded =
+    new Date().getTime() - new Date(comment.createdAt).getTime() < 5000;
+
   //* MUTATIONS
   const commentMuation = useMutation({
     mutationFn: () => {
@@ -39,7 +43,6 @@ const PostCommentItem = ({ comment, postId, refetchComments }: Props) => {
       refetchComments && refetchComments();
     },
     onError: () => {
-      console.log("error");
       console.log(commentMuation.error);
       notify("Something went wrong", "error");
     },
@@ -51,7 +54,10 @@ const PostCommentItem = ({ comment, postId, refetchComments }: Props) => {
   }
 
   let commentUI = (
-    <li className="flex items-center w-full justify-between transition hover:bg-base-100 p-1 py-2 rounded-md ">
+    <li
+      className={`flex items-center w-full justify-between transition hover:bg-base-100 p-1 py-2 rounded-md 
+    ${wasJustAdded ? `recently-added` : ""}`}
+    >
       <div className="flex items-center">
         <img
           className="w-10 h-10 rounded-full"
