@@ -1,4 +1,4 @@
-# In-Browser Markdown Editor
+# Friends Feed
 
 # Overview
 
