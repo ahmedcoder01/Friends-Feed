@@ -28,7 +28,7 @@ const NavBar: FC = () => {
     <nav className="navbar bg-base-100">
       <div className="navbar-start">
         <button
-          className="max-sm:block sm:hidden btn btn-ghost"
+          className="max-md:block md:hidden btn btn-ghost"
           onClick={() => {
             dispatch(uiActions.toggleSidebar());
           }}

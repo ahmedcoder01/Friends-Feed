@@ -58,12 +58,12 @@ const Sidebar = (props: Props): JSX.Element => {
 
   return (
     <aside
-      className={`md:w-72 max-md:w-24 h-screen relative ${
-        sidebarOpen ? "" : "max-sm:hidden"
+      className={`  md:w-24  h-screen relative ${
+        sidebarOpen ? "" : "max-md:hidden"
       }`}
     >
-      <div className="fixed sm:top-16 max-sm:top-0 left-0 px-4 py-7  h-screen max-sm:w-screen z-40 max-sm:bg-black">
-        <div className="max-sm:flex sm:hidden w-full justify-end">
+      <div className="fixed sm:top-16 max-sm:top-0 left-0 px-4 py-7  h-screen max-md:w-screen z-40 max-md:bg-black">
+        <div className="max-md:flex md:hidden w-full justify-end">
           <button
             className="btn btn-ghost"
             onClick={() => dispatch(uiActions.toggleSidebar())}
@@ -88,14 +88,14 @@ const Sidebar = (props: Props): JSX.Element => {
                   return isActive ? (
                     <div className="flex items-center gap-4 btn btn-ghost justify-start ">
                       {<item.IconActive size="26px" />}
-                      <span className="text-blue-500 sm:max-md:hidden text-xl capitalize">
+                      <span className="text-blue-500 md:hidden text-xl capitalize">
                         {item.name}
                       </span>
                     </div>
                   ) : (
                     <div className="flex items-center gap-4 btn btn-ghost justify-start">
                       {<item.Icon size="26px" />}
-                      <span className="text-gray-500 sm:max-md:hidden text-xl capitalize">
+                      <span className="text-gray-500 md:hidden text-xl capitalize">
                         {item.name}
                       </span>
                     </div>
@@ -111,7 +111,7 @@ const Sidebar = (props: Props): JSX.Element => {
               onClick={() => dispatch(logout())}
             >
               <FiLogOut size="26px" />
-              <span className="text-gray-500 sm:max-md:hidden text-xl capitalize">
+              <span className="text-gray-500 md:hidden text-xl capitalize">
                 Logout
               </span>
             </button>

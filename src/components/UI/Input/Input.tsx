@@ -7,6 +7,7 @@ interface Props {
   className?: string;
   full?: boolean;
   placeholder?: string;
+  [x: string]: any;
 }
 
 const Input = forwardRef<HTMLInputElement, Props>(

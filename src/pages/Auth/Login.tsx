@@ -35,11 +35,13 @@ const formInputs = [
     name: "email",
     label: "Email",
     placeholder: "example@gmail.com",
+    type: "email",
   },
   {
     name: "password",
     label: "Password",
     placeholder: "enter a password",
+    type: "password",
   },
 ];
 
@@ -79,6 +81,7 @@ const Login = (): JSX.Element => {
                   name={input.name}
                   label={input.label}
                   placeholder={input.placeholder}
+                  type={input.type}
                   className="mb-3 w-full"
                   full
                 />

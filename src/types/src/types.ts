@@ -80,3 +80,10 @@ export interface FriendRequest {
   createdAt: string;
   sender: MiniUser;
 }
+
+// UI TYPES
+export interface Tab {
+  label: string;
+  selector?: string;
+  Component: React.ReactNode;
+}

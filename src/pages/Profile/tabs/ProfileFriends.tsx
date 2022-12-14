@@ -2,10 +2,10 @@ import React from "react";
 import { VisitedUser, User } from "../../../types";
 
 type Props = {
-  user: VisitedUser;
+  profileUser: VisitedUser;
 };
 
-const ProfileFriends = (props: Props) => {
+const ProfileFriends = ({ profileUser }: Props) => {
   return <div>ProfileFriends</div>;
 };
 

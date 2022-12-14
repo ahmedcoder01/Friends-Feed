@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Default } from "react-toastify/dist/utils";
 import { Notification } from "../../../types";
-import { defaultAvatar } from "../../../utils/helpers";
+import { defaultAvatar, getRelativeTime } from "../../../utils/helpers";
 
 type Props = {
   notification: Notification;
@@ -29,6 +29,10 @@ const NotificationMenuItem = ({ notification }: Props) => {
                   {notification.fromUser.name}
                 </span>{" "}
                 liked your post
+              </p>
+
+              <p className="text-gray-400 text-sm text-left">
+                {getRelativeTime(notification.createdAt)}
               </p>
             </div>
           </Link>
