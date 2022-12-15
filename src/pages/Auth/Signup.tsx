@@ -136,4 +136,4 @@ const Signup = (): JSX.Element => {
   );
 };
 
-export default withSuspense(Signup);
+export default Signup;

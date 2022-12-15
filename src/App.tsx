@@ -13,13 +13,13 @@ import { getUI } from "./store/slices/uiSlice";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import Loader from "./components/UI/Loader/Loader";
+import Login from "./pages/Auth/Login";
+import Signup from "./pages/Auth/Signup";
 
 // Lazy load components
 const Home = lazy(() => import("./pages/Home/Home"));
 const Profile = lazy(() => import("./pages/Profile/Profile"));
 const Search = lazy(() => import("./pages/Search/Search"));
-const Signup = lazy(() => import("./pages/Auth/Signup"));
-const Login = lazy(() => import("./pages/Auth/Login"));
 
 function App() {
   const dispatch = useAppDispatch();

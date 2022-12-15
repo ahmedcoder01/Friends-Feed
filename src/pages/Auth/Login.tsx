@@ -119,4 +119,4 @@ const Login = (): JSX.Element => {
   );
 };
 
-export default withSuspense(Login);
+export default Login;
