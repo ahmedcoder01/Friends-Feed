@@ -2,7 +2,7 @@
 
 # Overview
 
-Friends Feed is a social media app built on top of React with all features you will ever get in a social app.
+Friends Feed is a social media app built on top of React with all features you will ever get in a social app
 
 ### What I have learnt
 
