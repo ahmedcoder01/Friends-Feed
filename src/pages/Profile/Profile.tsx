@@ -1,31 +1,20 @@
-import { Player } from "@lottiefiles/react-lottie-player";
-import React, { useEffect, useState, Children } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { getAuth } from "../../store/slices/authSlice";
-import Container from "../../components/UI/Container/Container";
 import ProfileHeader from "../../components/Profile/ProfileHeader";
-import {
-  Link,
-  Navigate,
-  Route,
-  useParams,
-  useSearchParams,
-} from "react-router-dom";
-import { useQueries, useQuery } from "@tanstack/react-query";
+import { Navigate, useParams, useSearchParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { getProfileById, getProfilePosts } from "../../client";
 import Loader from "../../components/UI/Loader/Loader";
 import useToast from "../../hooks/useToast";
 import NavBar from "../../components/NavBar/NavBar";
-import { Post, Tab, VisitedUser } from "../../types";
-import PostItem from "../../components/Post/PostItem";
-import ProfileBody from "../../components/Profile/ProfileBody";
+import { Tab, VisitedUser } from "../../types";
 import Sidebar from "../../components/Sidebar/Sidebar";
-import { Routes } from "react-router-dom";
 import ProfileFriends from "./tabs/ProfileFriends";
-import PostBox from "../../components/PostBox/PostBox";
 import ProfileOverview from "./tabs/ProfileOverview";
 import useTabs from "../../hooks/useTabs";
 import NotFound from "../NotFound/NotFound";
+import withSuspense from "../../HOC/withSuspense";
 
 // profile tabs define
 
@@ -120,4 +109,4 @@ const Profile = (): JSX.Element => {
   );
 };
 
-export default Profile;
+export default withSuspense(Profile);

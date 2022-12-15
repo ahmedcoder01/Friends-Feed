@@ -1,15 +1,10 @@
 import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
-import Login from "./pages/Auth/Login";
-import Signup from "./pages/Auth/Signup";
-import Home from "./pages/Home/Home";
-import Profile from "./pages/Profile/Profile";
 import { refreshToken } from "./store/thunks";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import { getAuth } from "./store/slices/authSlice";
 import NotFound from "./pages/NotFound/NotFound";
-import Search from "./pages/Search/Search";
 import { createPortal } from "react-dom";
 import { ToastContainer } from "react-toastify";
 import { useAppDispatch } from "./store/hooks";
@@ -17,6 +12,14 @@ import PATHS from "./routes";
 import { getUI } from "./store/slices/uiSlice";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
+import Loader from "./components/UI/Loader/Loader";
+
+// Lazy load components
+const Home = lazy(() => import("./pages/Home/Home"));
+const Profile = lazy(() => import("./pages/Profile/Profile"));
+const Search = lazy(() => import("./pages/Search/Search"));
+const Signup = lazy(() => import("./pages/Auth/Signup"));
+const Login = lazy(() => import("./pages/Auth/Login"));
 
 function App() {
   const dispatch = useAppDispatch();

@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import authActions, { getAuth } from "../../store/slices/authSlice";
 import { useAppDispatch } from "../../store/hooks";
 import Input from "../../components/UI/Input/Input";
+import withSuspense from "../../HOC/withSuspense";
 
 interface FormikSignupFields {
   name: string;
@@ -135,4 +136,4 @@ const Signup = (): JSX.Element => {
   );
 };
 
-export default Signup;
+export default withSuspense(Signup);

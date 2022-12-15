@@ -3,6 +3,7 @@ import { getAuth } from "../../store/slices/authSlice";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import Loader from "../UI/Loader/Loader";
+import withSuspense from "../../HOC/withSuspense";
 
 interface ProtectedRouteProps {
   children: JSX.Element;
@@ -22,4 +23,4 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps): JSX.Element => {
   return children;
 };
 
-export default ProtectedRoute;
+export default withSuspense(ProtectedRoute);

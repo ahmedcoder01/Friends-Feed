@@ -14,6 +14,7 @@ import logo from "../../assets/images/app/logo.png";
 import { useRef } from "react";
 import Input from "../../components/UI/Input/Input";
 import { useAppDispatch } from "../../store/hooks";
+import withSuspense from "../../HOC/withSuspense";
 
 interface FormikLoginFields {
   email: string;
@@ -118,4 +119,4 @@ const Login = (): JSX.Element => {
   );
 };
 
-export default Login;
+export default withSuspense(Login);
