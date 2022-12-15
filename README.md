@@ -30,6 +30,7 @@ The criteria that must be met in order to consider this project a success.
 
 - Professional Material UI usage
 - Strong Firebase rules
+- Secure Checkouts
 
 # Scope
 
